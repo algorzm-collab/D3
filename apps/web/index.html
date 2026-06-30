@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>D3HR Persona Home Prototype</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <aside class="sidebar" aria-label="D3HR navigation">
+        <div class="brand">
+          <span class="brand-mark">D3</span>
+          <div>
+            <strong>D3HR</strong>
+            <span>Public HR Evidence OS</span>
+          </div>
+        </div>
+        <nav class="persona-tabs" aria-label="Persona views">
+          <button class="persona-tab active" data-persona="employee">직원</button>
+          <button class="persona-tab" data-persona="manager">관리자</button>
+          <button class="persona-tab" data-persona="hr">HR</button>
+          <button class="persona-tab" data-persona="institution_head">기관장</button>
+          <button class="persona-tab" data-persona="consultant">컨설턴트</button>
+        </nav>
+      </aside>
+
+      <section class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">오늘의 D3HR</p>
+            <h1 id="persona-title">직원 홈</h1>
+          </div>
+          <div class="status-pill" id="persona-hook">오늘 한 일이 성과와 커리어가 됩니다</div>
+        </header>
+
+        <section class="hero-panel" id="primary-panel"></section>
+
+        <section class="grid" id="metric-grid" aria-label="Persona metrics"></section>
+
+        <section class="two-column">
+          <article class="panel">
+            <h2 id="mission-title">오늘의 미션</h2>
+            <ul class="task-list" id="mission-list"></ul>
+          </article>
+          <article class="panel">
+            <h2>데이터 연계</h2>
+            <ol class="data-flow" id="data-flow"></ol>
+          </article>
+        </section>
+      </section>
+    </main>
+
+    <script src="./src/persona-home.js"></script>
+  </body>
+</html>
+

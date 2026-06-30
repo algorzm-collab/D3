@@ -1,0 +1,10 @@
+{
+  "name": "@d3hr/web",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "test": "node test/persona-home.test.mjs"
+  }
+}
+

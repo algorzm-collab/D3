@@ -22,6 +22,11 @@ Required data:
 - feedback notifications
 - career progress summary
 
+Prototype:
+
+- `apps/web/index.html`
+- `apps/web/src/persona-home.js`
+
 ## Manager Home
 
 Primary jobs:
@@ -38,6 +43,11 @@ Required data:
 - evidence gap count
 - feedback queue
 - workload signal summary
+
+Prototype:
+
+- `apps/web/index.html`
+- `apps/web/src/persona-home.js`
 
 ## HR Home
 
@@ -86,4 +96,3 @@ Required data:
 - job-description review queue
 - missing competency/task mappings
 - project-scoped issue list
-

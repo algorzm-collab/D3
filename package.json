@@ -7,7 +7,7 @@
   "scripts": {
     "check:docs": "node scripts/check-docs.mjs",
     "check:contracts": "node scripts/check-contracts.mjs",
-    "test": "npm run check:docs && npm run check:contracts && npm --workspace @d3hr/api test"
+    "test": "npm run check:docs && npm run check:contracts && npm --workspace @d3hr/api test && npm --workspace @d3hr/web test"
   },
   "workspaces": [
     "apps/*",

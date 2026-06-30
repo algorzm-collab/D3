@@ -1,5 +1,6 @@
 import http from "node:http";
 import { createDailyCheckin, readTeamCheckins } from "./routes/work-okr.mjs";
+import { requestContextFromHttp } from "./request-context.mjs";
 
 function sendJson(response, status, body) {
   response.writeHead(status, { "content-type": "application/json" });
@@ -13,29 +14,10 @@ async function readBody(request) {
   return JSON.parse(Buffer.concat(chunks).toString("utf8"));
 }
 
-function actorFromHeaders(request) {
-  return {
-    tenantId: request.headers["x-tenant-id"] ?? "tenant_demo",
-    userId: request.headers["x-user-id"] ?? "user_demo",
-    roles: String(request.headers["x-roles"] ?? "employee")
-      .split(",")
-      .map((role) => role.trim())
-      .filter(Boolean),
-    organizationIds: String(request.headers["x-org-ids"] ?? "")
-      .split(",")
-      .map((orgId) => orgId.trim())
-      .filter(Boolean)
-  };
-}
-
 export function createServer() {
   return http.createServer(async (request, response) => {
     const url = new URL(request.url, "http://localhost");
-    const requestContext = {
-      actor: actorFromHeaders(request),
-      ipAddress: request.socket.remoteAddress,
-      userAgent: request.headers["user-agent"]
-    };
+    const requestContext = requestContextFromHttp(request);
 
     try {
       if (request.method === "GET" && url.pathname === "/health") {
@@ -74,4 +56,3 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     console.log(`D3HR API listening on http://localhost:${port}`);
   });
 }
-

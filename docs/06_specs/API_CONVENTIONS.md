@@ -31,6 +31,12 @@ The route must declare:
 - handler
 - expected audit behavior
 
+## Persistence Boundary
+
+Handlers may call repositories, but routes must not keep module state directly.
+
+Repositories must preserve tenant scoping in every query.
+
 ## Error Shape
 
 ```json

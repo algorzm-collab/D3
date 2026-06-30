@@ -39,3 +39,13 @@ Request context -> Resource context -> Policy evaluation -> Audit event -> Handl
 ```
 
 No route may directly execute sensitive data access or mutation without this pattern or an equivalent framework-level enforcement layer.
+
+## Repository Adapter
+
+Routes must not own persistence state directly.
+
+```text
+Route -> Guarded Handler -> Repository Interface -> Database Adapter
+```
+
+The MVP may use in-memory repositories for tests and early prototypes, but production persistence must be replaceable without changing policy or route semantics.

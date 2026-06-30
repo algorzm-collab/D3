@@ -19,6 +19,7 @@ Implementation:
 
 - `apps/api/src/routes/work-okr.mjs#createDailyCheckin`
 - must use guarded handler
+- must persist through check-in repository
 
 ## Read Team Check-Ins
 
@@ -39,3 +40,4 @@ Implementation:
 
 - `apps/api/src/routes/work-okr.mjs#readTeamCheckins`
 - must use guarded handler
+- must query through check-in repository with tenant and organization scope

@@ -1,7 +1,9 @@
 import assert from "node:assert/strict";
-import { createDailyCheckin, readTeamCheckins, resetCheckinsForTest } from "../src/routes/work-okr.mjs";
+import { createInMemoryCheckinRepository } from "../src/repositories/checkin-repository.mjs";
+import { createWorkOkrRoutes } from "../src/routes/work-okr.mjs";
 
-resetCheckinsForTest();
+const checkinRepository = createInMemoryCheckinRepository();
+const { createDailyCheckin, readTeamCheckins } = createWorkOkrRoutes({ checkinRepository });
 
 const employeeContext = {
   actor: {
@@ -75,4 +77,3 @@ assert.equal(operatorDenied.status, 403);
 assert.equal(operatorDenied.body.error.reasonCode, "SYSTEM_OPERATOR_HR_CONTENT_DENIED");
 
 console.log("API guardrail tests passed.");
-

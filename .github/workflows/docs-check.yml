@@ -1,0 +1,20 @@
+name: Docs Check
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  docs-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify required governance docs
+        run: |
+          test -f docs/00_constitution/D3HR_PRODUCT_CONSTITUTION.md
+          test -f docs/00_constitution/D3HR_DEVELOPMENT_CONSTITUTION.md
+          test -f docs/05_sop/FEATURE_DEVELOPMENT_SOP.md
+          test -f docs/07_decisions/ADR-0001-product-positioning.md
+

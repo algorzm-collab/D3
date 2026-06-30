@@ -1,0 +1,43 @@
+name: Feature
+description: Propose a D3HR feature
+title: "[Feature] "
+labels: ["type:feature"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: Which persona and HR decision does this solve?
+    validations:
+      required: true
+  - type: dropdown
+    id: module
+    attributes:
+      label: Module
+      options:
+        - Identity & Access
+        - JobDB
+        - Work & OKR
+        - Performance Evidence
+        - Career & Learning
+        - Placement & Workforce
+        - Public HR Evidence Pack
+        - Community & Benchmark
+        - Admin & Operations
+    validations:
+      required: true
+  - type: textarea
+    id: policy
+    attributes:
+      label: Policy / Permission Impact
+      description: Role, org scope, data sensitivity, workflow state, and audit-log impact.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance Criteria
+      description: Concrete completion criteria.
+    validations:
+      required: true
+

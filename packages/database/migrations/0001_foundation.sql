@@ -84,6 +84,42 @@ create table ncs_units (
   updated_at text not null
 );
 
+create table source_documents (
+  id text primary key,
+  tenant_id text references tenants(id),
+  title text not null,
+  institution text,
+  source_type text not null,
+  document_type text not null,
+  source_path text,
+  extracted_pages integer,
+  source_completeness text,
+  enrichment_required integer not null default 1,
+  received_at text,
+  extracted_at text,
+  checksum text,
+  created_at text not null,
+  updated_at text not null
+);
+
+create table source_seed_items (
+  id text primary key,
+  source_document_id text not null references source_documents(id),
+  source_page integer,
+  source_order integer,
+  raw_text text not null,
+  normalized_text text,
+  seed_type text not null,
+  extraction_confidence real,
+  enrichment_status text not null default 'seed_only',
+  first_seen_at text not null,
+  valid_from text,
+  valid_to text,
+  superseded_by text references source_seed_items(id),
+  created_at text not null,
+  updated_at text not null
+);
+
 create table jobs (
   id text primary key,
   tenant_id text not null references tenants(id),
@@ -107,6 +143,16 @@ create table job_versions (
   created_at text not null,
   finalized_at text,
   unique (tenant_id, job_id, version_number)
+);
+
+create table job_seed_links (
+  id text primary key,
+  tenant_id text not null references tenants(id),
+  job_id text references jobs(id),
+  job_version_id text references job_versions(id),
+  seed_item_id text not null references source_seed_items(id),
+  link_type text not null,
+  created_at text not null
 );
 
 create table tasks (

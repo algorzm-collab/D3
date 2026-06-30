@@ -16,6 +16,9 @@
 - job_description_element_groups
 - job_description_fields
 - job_description_field_values
+- source_documents
+- source_seed_items
+- job_seed_links
 - job_strategic_inputs
 - job_value_factors
 - job_mobility_paths
@@ -48,6 +51,9 @@ The following remain planned:
 - job_description_element_groups
 - job_description_fields
 - job_description_field_values
+- source_documents
+- source_seed_items
+- job_seed_links
 - job_strategic_inputs
 - job_value_factors
 - job_mobility_paths
@@ -78,3 +84,11 @@ See `JOB_DESCRIPTION_ELEMENT_ARCHITECTURE.md` and `JOB_DESCRIPTION_FIELD_CATALOG
 Structured job-description values are versioned by `job_version_id`.
 
 NCS-derived values and institution-modified values must be distinguishable through source metadata.
+
+## Seed And Time-Series Rule
+
+Source documents and seed items are first-class data.
+
+They must not be discarded after job versions are created.
+
+See `docs/03_architecture/SEED_TO_TIMESERIES_ARCHITECTURE.md`.

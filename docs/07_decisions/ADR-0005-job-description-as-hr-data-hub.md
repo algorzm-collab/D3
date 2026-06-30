@@ -37,4 +37,4 @@ If D3HR models job descriptions only as text documents, downstream modules such 
 - NCS-derived and institution-modified fields must be distinguishable.
 - Compensation/recruitment/retirement fields are modeled as linkages but not implemented as MVP automation.
 - Access policy and sensitivity must apply at field group level.
-
+- Source documents and seed items remain first-class evidence and must not be overwritten after enrichment.

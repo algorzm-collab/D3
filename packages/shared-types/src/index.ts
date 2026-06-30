@@ -96,3 +96,4 @@ export interface PolicyDecision {
   requiredAudit: boolean;
 }
 
+export type { PersonaMetricCode, PersonaMetricEvent } from "./persona-metrics";

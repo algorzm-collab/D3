@@ -59,7 +59,9 @@ const systemOperatorGuardrailRule: PolicyRule = {
   evaluate(input) {
     if (
       input.actor.roles.includes("system_operator") &&
-      (input.action === "read_sensitive" || input.action === "export") &&
+      (input.action === "read" ||
+        input.action === "read_sensitive" ||
+        input.action === "export") &&
       (input.resource.sensitivity === "sensitive" ||
         input.resource.sensitivity === "highly_sensitive")
     ) {
@@ -108,4 +110,3 @@ export function evaluatePolicy(input: PolicyInput, rules = foundationPolicyRules
 
   return decision(false, "NO_RULE_MATCHED");
 }
-

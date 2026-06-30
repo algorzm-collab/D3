@@ -30,3 +30,12 @@ External community -> separated public-institution professional network
 
 Every sensitive request must pass through policy evaluation before data access or mutation.
 
+## API Guarded Handler
+
+The foundation API uses a guarded handler pattern:
+
+```text
+Request context -> Resource context -> Policy evaluation -> Audit event -> Handler execution
+```
+
+No route may directly execute sensitive data access or mutation without this pattern or an equivalent framework-level enforcement layer.

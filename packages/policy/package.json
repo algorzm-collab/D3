@@ -3,9 +3,8 @@
   "version": "0.0.0",
   "type": "module",
   "private": true,
-  "main": "src/index.ts",
+  "main": "src/index.mjs",
   "dependencies": {
     "@d3hr/shared-types": "0.0.0"
   }
 }
-

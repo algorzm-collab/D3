@@ -15,6 +15,11 @@ Audit:
 
 - create event if sensitivity is restricted or higher
 
+Implementation:
+
+- `apps/api/src/routes/work-okr.mjs#createDailyCheckin`
+- must use guarded handler
+
 ## Read Team Check-Ins
 
 ```text
@@ -30,3 +35,7 @@ Audit:
 
 - read_sensitive when evidence sensitivity is sensitive or higher
 
+Implementation:
+
+- `apps/api/src/routes/work-okr.mjs#readTeamCheckins`
+- must use guarded handler

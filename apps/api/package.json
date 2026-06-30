@@ -1,0 +1,16 @@
+{
+  "name": "@d3hr/api",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "main": "src/server.mjs",
+  "scripts": {
+    "start": "node src/server.mjs",
+    "test": "node test/api-guardrails.test.mjs"
+  },
+  "dependencies": {
+    "@d3hr/audit": "0.0.0",
+    "@d3hr/policy": "0.0.0"
+  }
+}
+

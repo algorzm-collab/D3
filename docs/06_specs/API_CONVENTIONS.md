@@ -20,6 +20,17 @@
 Authenticate -> Resolve tenant -> Resolve actor context -> Policy check -> Execute -> Audit -> Respond
 ```
 
+## Guarded Handler Rule
+
+API routes must use `guardedHandler` or an equivalent enforcement layer before accessing sensitive data.
+
+The route must declare:
+
+- action
+- resource context derivation
+- handler
+- expected audit behavior
+
 ## Error Shape
 
 ```json
@@ -43,4 +54,3 @@ Authenticate -> Resolve tenant -> Resolve actor context -> Policy check -> Execu
 - CONFLICT
 - RATE_LIMITED
 - INTERNAL_ERROR
-

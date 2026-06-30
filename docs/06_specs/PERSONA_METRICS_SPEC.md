@@ -30,3 +30,8 @@ They must be used to improve product adoption, evidence completeness, and workfl
 - Aggregates are preferred for HR and institution-head views.
 - Sensitive correlation requires explicit policy review.
 
+## Initial Implementation
+
+`daily_checkin_active_users` is emitted when an employee successfully creates a daily check-in.
+
+Denied requests must not emit success metrics.

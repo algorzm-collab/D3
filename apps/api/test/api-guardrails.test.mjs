@@ -1,13 +1,16 @@
 import assert from "node:assert/strict";
 import { createInMemoryAuditRepository } from "../src/repositories/audit-repository.mjs";
 import { createInMemoryCheckinRepository } from "../src/repositories/checkin-repository.mjs";
+import { createInMemoryMetricRepository } from "../src/repositories/metric-repository.mjs";
 import { createWorkOkrRoutes } from "../src/routes/work-okr.mjs";
 
 const checkinRepository = createInMemoryCheckinRepository();
 const auditRepository = createInMemoryAuditRepository();
+const metricRepository = createInMemoryMetricRepository();
 const { createDailyCheckin, readTeamCheckins } = createWorkOkrRoutes({
   checkinRepository,
-  auditRepository
+  auditRepository,
+  metricRepository
 });
 
 const employeeContext = {
@@ -31,6 +34,8 @@ assert.equal(created.status, 200);
 assert.equal(created.body.data.userId, "user_1");
 assert.equal(created.auditEvents.length, 1);
 assert.equal((await auditRepository.findAllForTest()).length, 1);
+assert.equal((await metricRepository.findAllForTest()).length, 1);
+assert.equal((await metricRepository.findAllForTest())[0].code, "daily_checkin_active_users");
 
 const deniedOtherUser = await createDailyCheckin(employeeContext, {
   userId: "user_2",
@@ -42,6 +47,7 @@ const deniedOtherUser = await createDailyCheckin(employeeContext, {
 assert.equal(deniedOtherUser.status, 403);
 assert.equal(deniedOtherUser.body.error.reasonCode, "DEFAULT_DENY");
 assert.equal((await auditRepository.findAllForTest()).length, 2);
+assert.equal((await metricRepository.findAllForTest()).length, 1);
 
 const managerContext = {
   actor: {

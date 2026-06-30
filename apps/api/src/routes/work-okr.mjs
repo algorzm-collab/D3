@@ -1,9 +1,12 @@
 import { guardedHandler } from "../guarded-handler.mjs";
+import { createPersonaMetricEvent } from "../persona-metrics.mjs";
 import { checkinRepository as defaultCheckinRepository } from "../repositories/checkin-repository.mjs";
+import { metricRepository as defaultMetricRepository } from "../repositories/metric-repository.mjs";
 
 export function createWorkOkrRoutes({
   checkinRepository = defaultCheckinRepository,
-  auditRepository
+  auditRepository,
+  metricRepository = defaultMetricRepository
 } = {}) {
   const createDailyCheckin = guardedHandler({
     action: "create",
@@ -30,6 +33,15 @@ export function createWorkOkrRoutes({
         workflowState: payload.workflowState ?? "draft",
         sensitivity: payload.sensitivity ?? "restricted"
       });
+
+      await metricRepository.append(
+        createPersonaMetricEvent({
+          code: "daily_checkin_active_users",
+          actor: requestContext.actor,
+          resourceType: "daily_checkin",
+          resourceId: checkin.id
+        })
+      );
 
       return { data: checkin };
     }

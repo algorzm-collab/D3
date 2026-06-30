@@ -1,9 +1,13 @@
 import { guardedHandler } from "../guarded-handler.mjs";
 import { checkinRepository as defaultCheckinRepository } from "../repositories/checkin-repository.mjs";
 
-export function createWorkOkrRoutes({ checkinRepository = defaultCheckinRepository } = {}) {
+export function createWorkOkrRoutes({
+  checkinRepository = defaultCheckinRepository,
+  auditRepository
+} = {}) {
   const createDailyCheckin = guardedHandler({
     action: "create",
+    auditRepository,
     resourceFromRequest(requestContext, payload) {
       return {
         tenantId: requestContext.actor.tenantId,
@@ -33,6 +37,7 @@ export function createWorkOkrRoutes({ checkinRepository = defaultCheckinReposito
 
   const readTeamCheckins = guardedHandler({
     action: "read",
+    auditRepository,
     resourceFromRequest(requestContext, payload) {
       return {
         tenantId: requestContext.actor.tenantId,

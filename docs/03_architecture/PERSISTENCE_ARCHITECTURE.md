@@ -33,3 +33,8 @@ HTTP route
 - userRepository
 - organizationRepository
 
+## Audit Persistence Rule
+
+Guarded handlers must persist generated audit events before returning a response.
+
+Denied sensitive requests are also auditable and must be persisted.

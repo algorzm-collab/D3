@@ -1,9 +1,15 @@
 import { createAuditEvent, requiresAudit } from "../../../packages/audit/src/index.mjs";
 import { evaluatePolicy } from "../../../packages/policy/src/index.mjs";
+import { auditRepository as defaultAuditRepository } from "./repositories/audit-repository.mjs";
 
 let auditSequence = 0;
 
-export function guardedHandler({ action, resourceFromRequest, handle }) {
+export function guardedHandler({
+  action,
+  resourceFromRequest,
+  handle,
+  auditRepository = defaultAuditRepository
+}) {
   return async function execute(requestContext, payload = {}) {
     const resource = resourceFromRequest(requestContext, payload);
     const policyDecision = evaluatePolicy({
@@ -33,6 +39,7 @@ export function guardedHandler({ action, resourceFromRequest, handle }) {
     }
 
     if (!policyDecision.allowed) {
+      await auditRepository.appendMany(auditEvents);
       return {
         status: 403,
         body: {
@@ -47,6 +54,7 @@ export function guardedHandler({ action, resourceFromRequest, handle }) {
     }
 
     const result = await handle(requestContext, payload);
+    await auditRepository.appendMany(auditEvents);
 
     return {
       status: 200,
@@ -55,4 +63,3 @@ export function guardedHandler({ action, resourceFromRequest, handle }) {
     };
   };
 }
-

@@ -1,9 +1,14 @@
 import assert from "node:assert/strict";
+import { createInMemoryAuditRepository } from "../src/repositories/audit-repository.mjs";
 import { createInMemoryCheckinRepository } from "../src/repositories/checkin-repository.mjs";
 import { createWorkOkrRoutes } from "../src/routes/work-okr.mjs";
 
 const checkinRepository = createInMemoryCheckinRepository();
-const { createDailyCheckin, readTeamCheckins } = createWorkOkrRoutes({ checkinRepository });
+const auditRepository = createInMemoryAuditRepository();
+const { createDailyCheckin, readTeamCheckins } = createWorkOkrRoutes({
+  checkinRepository,
+  auditRepository
+});
 
 const employeeContext = {
   actor: {
@@ -25,6 +30,7 @@ const created = await createDailyCheckin(employeeContext, {
 assert.equal(created.status, 200);
 assert.equal(created.body.data.userId, "user_1");
 assert.equal(created.auditEvents.length, 1);
+assert.equal((await auditRepository.findAllForTest()).length, 1);
 
 const deniedOtherUser = await createDailyCheckin(employeeContext, {
   userId: "user_2",
@@ -35,6 +41,7 @@ const deniedOtherUser = await createDailyCheckin(employeeContext, {
 
 assert.equal(deniedOtherUser.status, 403);
 assert.equal(deniedOtherUser.body.error.reasonCode, "DEFAULT_DENY");
+assert.equal((await auditRepository.findAllForTest()).length, 2);
 
 const managerContext = {
   actor: {
@@ -75,5 +82,6 @@ const operatorDenied = await readTeamCheckins(systemOperatorContext, {
 
 assert.equal(operatorDenied.status, 403);
 assert.equal(operatorDenied.body.error.reasonCode, "SYSTEM_OPERATOR_HR_CONTENT_DENIED");
+assert.equal((await auditRepository.findAllForTest()).length, 5);
 
 console.log("API guardrail tests passed.");

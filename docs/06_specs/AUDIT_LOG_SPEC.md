@@ -43,3 +43,4 @@ Make sensitive HR access and decisions explainable, auditable, and recoverable.
 
 If an action can affect evaluation, placement, career, job description, external reporting, or sensitive HR content, it must be auditable.
 
+Audit events must be persisted for both allowed and denied sensitive operations.

@@ -35,6 +35,7 @@ D3HR is not a generic HR SaaS. It is specialized for Korean public institutions,
 - RBAC + ABAC + workflow-based access control
 - Audit logs for sensitive reads, writes, approvals, and exports
 - Versioned job descriptions
+- Structured job-description element catalog
 - Explainable recommendation evidence
 - Documentation synchronized with implementation
 
@@ -46,4 +47,3 @@ D3HR is not a generic HR SaaS. It is specialized for Korean public institutions,
 - Undocumented API or table creation
 - Community-first product drift
 - Dashboard-only implementation without evidence data
-

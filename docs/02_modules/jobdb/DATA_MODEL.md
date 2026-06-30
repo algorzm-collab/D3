@@ -13,6 +13,13 @@
 - job_task_mappings
 - job_competency_mappings
 - job_description_reviews
+- job_description_element_groups
+- job_description_fields
+- job_description_field_values
+- job_strategic_inputs
+- job_value_factors
+- job_mobility_paths
+- job_talent_profiles
 
 ## Sensitivity
 
@@ -38,3 +45,36 @@ The following remain planned:
 - job_task_mappings
 - job_competency_mappings
 - job_description_reviews
+- job_description_element_groups
+- job_description_fields
+- job_description_field_values
+- job_strategic_inputs
+- job_value_factors
+- job_mobility_paths
+- job_talent_profiles
+
+## Element Groups
+
+JobDB field design follows:
+
+- Strategic Input
+- Job Core
+- Requirement
+- Job Value / Grade
+- Performance Management
+- Competency Diagnosis
+- Compensation Linkage
+- Promotion Linkage
+- Workforce Planning
+- Mobility / Career Development
+- Targeted Talent Type
+- Recruitment Linkage
+- Retirement / Exit Linkage
+
+See `JOB_DESCRIPTION_ELEMENT_ARCHITECTURE.md` and `JOB_DESCRIPTION_FIELD_CATALOG.md`.
+
+## Field Value Rule
+
+Structured job-description values are versioned by `job_version_id`.
+
+NCS-derived values and institution-modified values must be distinguishable through source metadata.

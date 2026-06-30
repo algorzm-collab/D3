@@ -131,6 +131,45 @@ create table competencies (
   updated_at text not null
 );
 
+create table job_description_element_groups (
+  code text primary key,
+  name text not null,
+  description text,
+  sort_order integer not null,
+  mvp_priority text not null default 'future_phase'
+);
+
+create table job_description_fields (
+  code text primary key,
+  group_code text not null references job_description_element_groups(code),
+  name text not null,
+  data_type text not null,
+  is_mvp integer not null default 0,
+  sensitivity_level text not null,
+  is_versioned integer not null default 1,
+  ncs_link text not null default 'no',
+  customization_level text not null,
+  linked_modules text,
+  created_at text not null,
+  updated_at text not null
+);
+
+create table job_description_field_values (
+  id text primary key,
+  tenant_id text not null references tenants(id),
+  job_version_id text not null references job_versions(id),
+  field_code text not null references job_description_fields(code),
+  source_type text not null,
+  value_text text,
+  value_number real,
+  value_boolean integer,
+  value_json text,
+  created_by text not null,
+  created_at text not null,
+  updated_at text not null,
+  unique (tenant_id, job_version_id, field_code)
+);
+
 create table okr_cycles (
   id text primary key,
   tenant_id text not null references tenants(id),
@@ -188,3 +227,64 @@ insert into roles (id, code, name, phase) values
   ('role_institution_head', 'institution_head', 'Institution Head', 'mvp'),
   ('role_consultant', 'consultant', 'Consultant', 'mvp'),
   ('role_system_operator', 'system_operator', 'System Operator', 'mvp');
+
+insert into job_description_element_groups (code, name, description, sort_order, mvp_priority) values
+  ('strategic_input', 'Strategic Input', 'Strategy, required competency, productivity, culture, and environment inputs.', 10, 'mvp'),
+  ('job_core', 'Job Core', 'Job classification, components, management system, and NCS mapping.', 20, 'mvp'),
+  ('requirement', 'Requirement', 'Competency, knowledge, skill, attitude, qualification, and experience requirements.', 30, 'mvp'),
+  ('job_value_grade', 'Job Value / Grade', 'Job evaluation, grading, authority, responsibility, and impact.', 40, 'mvp'),
+  ('performance_management', 'Performance Management', 'Management items, process, measurement, leadership, target, and evidence.', 50, 'mvp'),
+  ('competency_diagnosis', 'Competency Diagnosis', 'Competency diagnosis, measurement, gaps, and development points.', 60, 'mvp'),
+  ('compensation_linkage', 'Compensation Linkage', 'Reward structure, contribution, level, payment method, and process.', 70, 'future_phase'),
+  ('promotion_linkage', 'Promotion Linkage', 'Promotion target, size, criteria, process, and upper job path.', 80, 'future_phase'),
+  ('workforce_planning', 'Workforce Planning', 'Workforce plan, capacity, headcount, gap, productivity, and AI impact.', 90, 'mvp_placeholder'),
+  ('mobility_career', 'Mobility / Career Development', 'Movement, appointment, criteria, process, and career path.', 100, 'mvp'),
+  ('targeted_talent', 'Targeted Talent Type', 'Talent type, size, pool, management package, and development package.', 110, 'mvp'),
+  ('recruitment_linkage', 'Recruitment Linkage', 'Recruitment need, size, criteria, process, and assessment method.', 120, 'future_phase'),
+  ('retirement_exit_linkage', 'Retirement / Exit Linkage', 'Retirement risk, succession, knowledge transfer, and exit process.', 130, 'future_phase');
+
+insert into job_description_fields (
+  code,
+  group_code,
+  name,
+  data_type,
+  is_mvp,
+  sensitivity_level,
+  is_versioned,
+  ncs_link,
+  customization_level,
+  linked_modules,
+  created_at,
+  updated_at
+) values
+  ('business_strategy', 'strategic_input', 'Business strategy', 'long_text', 1, 'internal', 1, 'no', 'public_standard', 'Evidence Pack, Workforce', datetime('now'), datetime('now')),
+  ('required_job_competency', 'strategic_input', 'Required job competency', 'relation', 1, 'internal', 1, 'yes', 'core_required', 'Career, JobDB', datetime('now'), datetime('now')),
+  ('productivity_driver', 'strategic_input', 'Productivity driver', 'tag', 1, 'internal', 1, 'no', 'public_standard', 'Workforce', datetime('now'), datetime('now')),
+  ('external_environment', 'strategic_input', 'External environment', 'tag', 1, 'internal', 1, 'no', 'public_standard', 'Workforce', datetime('now'), datetime('now')),
+  ('job_classification', 'job_core', 'Job classification', 'relation', 1, 'internal', 1, 'partial', 'core_required', 'JobDB', datetime('now'), datetime('now')),
+  ('job_title', 'job_core', 'Job title', 'text', 1, 'internal', 1, 'partial', 'core_required', 'JobDB', datetime('now'), datetime('now')),
+  ('job_purpose', 'job_core', 'Job purpose', 'long_text', 1, 'internal', 1, 'partial', 'core_required', 'Evidence Pack', datetime('now'), datetime('now')),
+  ('job_components', 'job_core', 'Job components', 'relation', 1, 'internal', 1, 'yes', 'core_required', 'Work & OKR', datetime('now'), datetime('now')),
+  ('legal_or_policy_basis', 'job_core', 'Legal/policy basis', 'long_text', 1, 'restricted', 1, 'no', 'public_standard', 'Evidence Pack', datetime('now'), datetime('now')),
+  ('ncs_mapping', 'job_core', 'NCS mapping', 'relation', 1, 'internal', 1, 'yes', 'core_required', 'JobDB', datetime('now'), datetime('now')),
+  ('required_competency', 'requirement', 'Required competency', 'relation', 1, 'internal', 1, 'yes', 'core_required', 'Career', datetime('now'), datetime('now')),
+  ('required_knowledge', 'requirement', 'Required knowledge', 'relation', 1, 'internal', 1, 'yes', 'core_required', 'Career, Learning', datetime('now'), datetime('now')),
+  ('required_skill', 'requirement', 'Required skill', 'relation', 1, 'internal', 1, 'yes', 'core_required', 'Career, Learning', datetime('now'), datetime('now')),
+  ('required_attitude', 'requirement', 'Required attitude', 'relation', 1, 'internal', 1, 'yes', 'core_required', 'Career', datetime('now'), datetime('now')),
+  ('qualification', 'requirement', 'Qualification', 'long_text', 1, 'restricted', 1, 'partial', 'public_standard', 'Recruitment', datetime('now'), datetime('now')),
+  ('experience', 'requirement', 'Experience', 'long_text', 1, 'restricted', 1, 'no', 'public_standard', 'Career', datetime('now'), datetime('now')),
+  ('job_evaluation_factor', 'job_value_grade', 'Job evaluation factor', 'relation', 1, 'restricted', 1, 'no', 'public_standard', 'Compensation, Evidence Pack', datetime('now'), datetime('now')),
+  ('grading', 'job_value_grade', 'Grading', 'enum', 1, 'restricted', 1, 'no', 'public_standard', 'Workforce', datetime('now'), datetime('now')),
+  ('authority', 'job_value_grade', 'Authority', 'long_text', 1, 'restricted', 1, 'no', 'public_standard', 'Evaluation', datetime('now'), datetime('now')),
+  ('responsibility', 'job_value_grade', 'Responsibility', 'long_text', 1, 'restricted', 1, 'no', 'public_standard', 'Evaluation', datetime('now'), datetime('now')),
+  ('performance_management_item', 'performance_management', 'Performance management item', 'relation', 1, 'restricted', 1, 'no', 'public_standard', 'Performance Evidence', datetime('now'), datetime('now')),
+  ('measurement_method', 'performance_management', 'Measurement method', 'long_text', 1, 'restricted', 1, 'partial', 'public_standard', 'Performance Evidence', datetime('now'), datetime('now')),
+  ('evidence_requirement', 'performance_management', 'Evidence requirement', 'relation', 1, 'restricted', 1, 'no', 'public_standard', 'Evidence Pack', datetime('now'), datetime('now')),
+  ('competency_management_item', 'competency_diagnosis', 'Competency management item', 'relation', 1, 'internal', 1, 'yes', 'public_standard', 'Career', datetime('now'), datetime('now')),
+  ('competency_gap_rule', 'competency_diagnosis', 'Competency gap rule', 'rule', 1, 'restricted', 1, 'no', 'public_standard', 'Career', datetime('now'), datetime('now')),
+  ('development_point', 'competency_diagnosis', 'Development point', 'tag', 1, 'internal', 1, 'no', 'public_standard', 'Learning', datetime('now'), datetime('now')),
+  ('ai_impact', 'workforce_planning', 'AI impact', 'score', 1, 'internal', 1, 'no', 'public_standard', 'Workforce', datetime('now'), datetime('now')),
+  ('movement_criteria', 'mobility_career', 'Movement criteria', 'rule', 1, 'restricted', 1, 'no', 'public_standard', 'Placement', datetime('now'), datetime('now')),
+  ('career_path', 'mobility_career', 'Career path', 'relation', 1, 'internal', 1, 'no', 'public_standard', 'Career', datetime('now'), datetime('now')),
+  ('talent_type', 'targeted_talent', 'Talent type', 'tag', 1, 'internal', 1, 'no', 'public_standard', 'Career, Recruitment', datetime('now'), datetime('now')),
+  ('development_package', 'targeted_talent', 'Development package', 'long_text', 1, 'internal', 1, 'no', 'public_standard', 'Learning', datetime('now'), datetime('now'));

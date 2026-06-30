@@ -1,4 +1,4 @@
-import { access } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
 
 const requiredFiles = [
   "packages/shared-types/src/index.ts",
@@ -23,5 +23,27 @@ if (missing.length > 0) {
   process.exit(1);
 }
 
-console.log(`Contract check passed (${requiredFiles.length} required files).`);
+const migration = await readFile("packages/database/migrations/0001_foundation.sql", "utf8");
+const requiredMigrationTerms = [
+  "job_description_element_groups",
+  "job_description_fields",
+  "job_description_field_values",
+  "strategic_input",
+  "job_core",
+  "requirement",
+  "job_value_grade",
+  "performance_management",
+  "competency_diagnosis",
+  "mobility_career",
+  "targeted_talent"
+];
 
+const missingMigrationTerms = requiredMigrationTerms.filter((term) => !migration.includes(term));
+
+if (missingMigrationTerms.length > 0) {
+  console.error("Foundation migration missing Job Description contract terms:");
+  for (const term of missingMigrationTerms) console.error(`- ${term}`);
+  process.exit(1);
+}
+
+console.log(`Contract check passed (${requiredFiles.length} required files).`);

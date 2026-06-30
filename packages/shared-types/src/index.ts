@@ -97,3 +97,11 @@ export interface PolicyDecision {
 }
 
 export type { PersonaMetricCode, PersonaMetricEvent } from "./persona-metrics";
+export type {
+  JobDescriptionCustomizationLevel,
+  JobDescriptionElementGroupCode,
+  JobDescriptionFieldDataType,
+  JobDescriptionFieldDefinition,
+  JobDescriptionFieldValue,
+  JobDescriptionSourceType
+} from "./job-description";

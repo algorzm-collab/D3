@@ -1,0 +1,17 @@
+{
+  "name": "d3hr",
+  "private": true,
+  "version": "0.0.0",
+  "description": "D3HR Public HR Evidence OS monorepo",
+  "type": "module",
+  "scripts": {
+    "check:docs": "node scripts/check-docs.mjs",
+    "check:contracts": "node scripts/check-contracts.mjs",
+    "test": "npm run check:docs && npm run check:contracts"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
+}
+

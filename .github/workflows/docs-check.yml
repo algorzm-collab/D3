@@ -12,12 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Verify required governance docs
-        run: |
-          test -f docs/00_constitution/D3HR_PRODUCT_CONSTITUTION.md
-          test -f docs/00_constitution/D3HR_DEVELOPMENT_CONSTITUTION.md
-          test -f docs/00_constitution/D3HR_MVP_SCOPE.md
-          test -f docs/00_constitution/D3HR_PREMORTEM.md
-          test -f docs/00_constitution/D3HR_ROADMAP.md
-          test -f docs/05_sop/FEATURE_DEVELOPMENT_SOP.md
-          test -f docs/08_testing/ACCESS_CONTROL_TEST_MATRIX.md
-          test -f docs/07_decisions/ADR-0001-product-positioning.md
+        run: npm run check:docs
+      - name: Verify foundation contracts
+        run: npm run check:contracts

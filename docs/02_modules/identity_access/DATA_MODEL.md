@@ -30,3 +30,22 @@ Sensitive mutable tables require:
 - updated_by
 - version or revision marker where applicable
 
+## Foundation Migration Coverage
+
+`packages/database/migrations/0001_foundation.sql` currently creates:
+
+- tenants
+- users
+- organizations
+- roles
+- role_assignments
+- workflow_states
+- audit_logs
+
+The following remain planned:
+
+- organization_memberships
+- permissions
+- access_policies
+- delegations
+- workflow_transitions

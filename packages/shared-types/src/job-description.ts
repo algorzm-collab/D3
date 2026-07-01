@@ -72,3 +72,13 @@ export interface JobAtomicTaskRow {
   sourceLine: string;
   parserVersion: "task_row_v1";
 }
+
+export interface JobCareerLink {
+  order: number;
+  direction: "prior" | "next";
+  targetOrder: number;
+  targetTitle: string;
+  similarityMarker: "selected";
+  sourceLine: string;
+  parserVersion: "career_link_v1";
+}

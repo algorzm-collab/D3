@@ -113,6 +113,38 @@ def parse_fit_flags(text: str):
     }
 
 
+def parse_career_links(text: str):
+    links = []
+    ref_pattern = re.compile(r"(\d+)\.\s+(.+?)\s+○")
+
+    for raw_line in text.splitlines():
+        line = " ".join(raw_line.split())
+        if not line or line.startswith("--- page"):
+            continue
+        refs = [
+            {"targetOrder": int(match.group(1)), "targetTitle": match.group(2).strip()}
+            for match in ref_pattern.finditer(line)
+        ]
+        if not refs:
+            continue
+
+        directions = ["prior", "next"]
+        for idx, ref in enumerate(refs[:2]):
+            links.append(
+                {
+                    "order": len(links) + 1,
+                    "direction": directions[idx],
+                    "targetOrder": ref["targetOrder"],
+                    "targetTitle": ref["targetTitle"],
+                    "similarityMarker": "selected",
+                    "sourceLine": raw_line,
+                    "parserVersion": "career_link_v1",
+                }
+            )
+
+    return links
+
+
 def count_task_rows(text: str):
     count = 0
     for line in text.splitlines():
@@ -204,6 +236,7 @@ def to_seed_job(job):
                 spans.get("certification_recommendation", "")
             ),
             "fitFlags": parse_fit_flags(spans.get("job_fit_flags", "")),
+            "careerLinks": parse_career_links(spans.get("career_path", "")),
         },
         "fieldValueMap": {
             "job_series": job_series,
@@ -229,6 +262,7 @@ def to_seed_job(job):
 
 def write_analysis_doc(seed_jobs, text):
     atomic_task_count = sum(len(job["parsed"]["atomicTasks"]) for job in seed_jobs)
+    career_link_count = sum(len(job["parsed"]["careerLinks"]) for job in seed_jobs)
     titles = "\n".join(
         f"- {job['sourceOrder']}. {job['normalizedTitle']} ({job.get('jobSeries') or '직렬 미확정'}, "
         f"기준일 {job.get('baseDate') or '미확정'}, 과업행 추정 {job['parsed']['taskRowEstimate']})"
@@ -244,6 +278,7 @@ def write_analysis_doc(seed_jobs, text):
 - Extracted text chars: {len(text)}
 - Parsed jobs: {len(seed_jobs)}
 - Parsed atomic task rows: {atomic_task_count}
+- Parsed career links: {career_link_count}
 - Base date pattern: `24.09.23`
 
 ## Interpretation
@@ -300,6 +335,15 @@ The unit of capture is not only `job`. D3HR decomposes each job into source docu
 - source line
 - parser version
 
+`career_link_v1` now splits the `직무 추천 경로` section into graph links:
+
+- prior or next direction
+- target job order
+- target job title
+- selected marker
+- source line
+- parser version
+
 The next parser iteration must split additional raw sections into atomic rows:
 
 - common competency, technical competency, definition, competency element
@@ -342,7 +386,7 @@ def main():
             "enrichmentStatus": "field_values_started",
             "versioningRule": "preserve extracted raw sections and convert section values into versioned JobDB field values",
             "timeSeriesRule": "track baseDate, first_seen_at, field version changes, and later enrichment events",
-            "atomicDecompositionRule": "sections are seeds; task rows are parsed in task_row_v1; competencies, learning, certificates, career links, and KPIs become atomic rows in later parser versions",
+            "atomicDecompositionRule": "sections are seeds; task rows are parsed in task_row_v1; career links are parsed in career_link_v1; competencies, learning, certificates, and KPIs become atomic rows in later parser versions",
         },
         "jobs": seed_jobs,
     }

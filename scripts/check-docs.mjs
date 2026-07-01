@@ -40,7 +40,8 @@ const requiredFiles = [
   "docs/07_decisions/ADR-0010-atomic-task-row-parser.md",
   "docs/07_decisions/ADR-0011-expanded-public-hr-role-boundaries.md",
   "docs/07_decisions/ADR-0012-generic-dummy-demo-data.md",
-  "docs/07_decisions/ADR-0013-daily-checkin-to-job-evidence-loop.md"
+  "docs/07_decisions/ADR-0013-daily-checkin-to-job-evidence-loop.md",
+  "docs/07_decisions/ADR-0014-career-link-graph-parser.md"
 ];
 
 const missing = [];

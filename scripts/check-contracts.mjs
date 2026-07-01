@@ -29,6 +29,7 @@ const requiredMigrationTerms = [
   "job_description_fields",
   "job_description_field_values",
   "job_atomic_tasks",
+  "job_career_links",
   "atomic_task_id",
   "job_atomic_task_id",
   "progress_status",

@@ -66,6 +66,22 @@ Known v1 limitation: PDF table extraction can split task group labels across lin
 
 Next parser versions should add source page, task group normalization, subtotal validation, and row-level confidence.
 
+## Career Link Parser v1
+
+`career_link_v1` extracts graph links from the `직무 추천 경로` section.
+
+| Field | Meaning |
+|---|---|
+| `order` | order inside the parsed career-link list |
+| `direction` | `prior` or `next` |
+| `targetOrder` | target job order from source document |
+| `targetTitle` | target job title text |
+| `similarityMarker` | selected marker from the source row |
+| `sourceLine` | original extracted line |
+| `parserVersion` | parser contract version |
+
+Known v1 limitation: the source table marks selection with `○`, but PDF extraction does not reliably preserve whether the marker belongs to `상` or `중`. v1 therefore captures selected links and preserves source lines; later versions should normalize similarity strength.
+
 ## DAU Hook
 
 The daily user hook comes from making these fields useful to each persona:

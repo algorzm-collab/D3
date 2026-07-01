@@ -45,6 +45,15 @@ assert.equal(typeof firstAtomicTask.difficulty, "number");
 assert.equal(typeof firstAtomicTask.jobSize, "number");
 assert.ok(firstAtomicTask.sourceLine.length > 0);
 
+assert.ok(firstJob.parsed.careerLinks.length > 0);
+const firstCareerLink = firstJob.parsed.careerLinks[0];
+assert.equal(firstCareerLink.parserVersion, "career_link_v1");
+assert.equal(firstCareerLink.direction, "prior");
+assert.equal(typeof firstCareerLink.targetOrder, "number");
+assert.equal(typeof firstCareerLink.targetTitle, "string");
+assert.equal(firstCareerLink.similarityMarker, "selected");
+assert.ok(firstCareerLink.sourceLine.length > 0);
+
 for (const field of [
   "job_series",
   "base_date",
@@ -78,9 +87,13 @@ for (const job of seed.jobs) {
   assert.ok(job.parsed.atomicTasks.length > 0);
   assert.equal(job.parsed.atomicTasks.length, job.parsed.taskRowEstimate);
   assert.ok(job.parsed.atomicTasks.every((task) => task.parserVersion === "task_row_v1"));
+  assert.ok(job.parsed.careerLinks.length > 0);
+  assert.ok(job.parsed.careerLinks.every((link) => link.parserVersion === "career_link_v1"));
 }
 
 const totalAtomicTasks = seed.jobs.reduce((sum, job) => sum + job.parsed.atomicTasks.length, 0);
 assert.equal(totalAtomicTasks, 431);
+const totalCareerLinks = seed.jobs.reduce((sum, job) => sum + job.parsed.careerLinks.length, 0);
+assert.equal(totalCareerLinks, 1492);
 
 console.log("KORAD general job description seed tests passed.");

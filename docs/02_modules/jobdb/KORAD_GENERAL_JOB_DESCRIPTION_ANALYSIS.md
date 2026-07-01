@@ -7,6 +7,7 @@
 - Extracted text chars: 134450
 - Parsed jobs: 35
 - Parsed atomic task rows: 431
+- Parsed career links: 1492
 - Base date pattern: `24.09.23`
 
 ## Interpretation
@@ -94,6 +95,15 @@ The unit of capture is not only `job`. D3HR decomposes each job into source docu
 - importance
 - difficulty
 - JOB-SIZE
+- source line
+- parser version
+
+`career_link_v1` now splits the `직무 추천 경로` section into graph links:
+
+- prior or next direction
+- target job order
+- target job title
+- selected marker
 - source line
 - parser version
 

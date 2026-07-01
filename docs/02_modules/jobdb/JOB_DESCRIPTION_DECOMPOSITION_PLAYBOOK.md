@@ -2,7 +2,9 @@
 
 ## Purpose
 
-Job descriptions are the seed data of D3HR. They must be decomposed deeply enough to support career management, workload analysis, competency diagnosis, performance evidence, learning recommendation, workforce planning, and benchmarking.
+Job-description inputs are the seed data for an institution's D3HR tenant. They are not D3HR-owned product content. They must be decomposed deeply enough to support career management, workload analysis, competency diagnosis, performance evidence, learning recommendation, workforce planning, and benchmarking.
+
+Product content is the schema, parser contract, workflow, permission model, UI, and recommendation logic. Institution content remains institution input unless explicitly converted into anonymized aggregate or approved reference material.
 
 ## Decomposition Ladder
 
@@ -20,6 +22,8 @@ Job descriptions are the seed data of D3HR. They must be decomposed deeply enoug
 
 The KORAD 2024 general job-description source proves the minimum body pattern D3HR must support:
 
+KORAD is a reference sample for schema and parser validation. It is not a built-in D3HR content library.
+
 | Source Section | Atomic Targets |
 |---|---|
 | 직무정보 | job series, job title, base date |
@@ -36,6 +40,7 @@ The KORAD 2024 general job-description source proves the minimum body pattern D3
 ## Non-Negotiable Rules
 
 - Raw extracted sections are never deleted after parsing.
+- Real institution inputs are never shipped as default product content.
 - Parser versions may add more atomic rows, but must not overwrite historical field values.
 - Every field must carry source lineage and be eligible for tenant-level benchmarking.
 - `JOB-SIZE`, importance, and difficulty are workforce-planning signals, not display-only text.

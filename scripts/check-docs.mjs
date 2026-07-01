@@ -14,6 +14,7 @@ const requiredFiles = [
   "docs/02_modules/jobdb/JOB_DESCRIPTION_DECOMPOSITION_PLAYBOOK.md",
   "docs/02_modules/jobdb/KORAD_GENERAL_JOB_DESCRIPTION_ANALYSIS.md",
   "docs/03_architecture/DATA_LINKAGE_ARCHITECTURE.md",
+  "docs/03_architecture/DATA_BOUNDARY_AND_INPUT_CLASSIFICATION.md",
   "docs/04_policies/ACCESS_CONTROL_POLICY.md",
   "docs/05_sop/FEATURE_DEVELOPMENT_SOP.md",
   "docs/06_specs/API_CONVENTIONS.md",

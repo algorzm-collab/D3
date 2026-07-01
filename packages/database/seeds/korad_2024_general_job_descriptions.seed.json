@@ -5,6 +5,11 @@
     "institution": "KORAD",
     "sourceType": "received_project_material",
     "documentType": "structured_job_descriptions",
+    "contentClass": "reference_sample",
+    "usageBoundary": "schema_parser_validation_not_product_content",
+    "tenantScopeRule": "must be loaded only into an authorized tenant or local reference workspace",
+    "salesUseRule": "use only as anonymized pattern or explicitly approved institution-specific reference",
+    "productContentRule": "must not ship as default D3HR content",
     "extractedPages": 224,
     "sourceCompleteness": "job_description_body",
     "enrichmentRequired": true

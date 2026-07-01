@@ -13,6 +13,8 @@ This PDF is not treated as a complete job-description source.
 
 It is treated as a `Job Registry Seed`: a first source for identifying institution-specific executive-level jobs that must later be enriched with structured Job Description elements.
 
+This source is a reference sample for schema and parser validation. It is not D3HR-owned product content, default demo content, or reusable sales content unless explicitly authorized and masked.
+
 ## Why This Matters
 
 D3HR must not view job descriptions as a one-time form completion task.
@@ -118,4 +120,3 @@ For each seed job, D3HR should collect:
 - targeted talent type
 - workforce planning assumptions
 - AI impact
-

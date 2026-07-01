@@ -9,6 +9,11 @@ const seed = JSON.parse(
 );
 
 assert.equal(seed.sourceDocument.documentType, "structured_job_descriptions");
+assert.equal(seed.sourceDocument.contentClass, "reference_sample");
+assert.equal(seed.sourceDocument.usageBoundary, "schema_parser_validation_not_product_content");
+assert.equal(seed.sourceDocument.tenantScopeRule, "must be loaded only into an authorized tenant or local reference workspace");
+assert.equal(seed.sourceDocument.salesUseRule, "use only as anonymized pattern or explicitly approved institution-specific reference");
+assert.equal(seed.sourceDocument.productContentRule, "must not ship as default D3HR content");
 assert.equal(seed.sourceDocument.extractedPages, 224);
 assert.equal(seed.sourceDocument.enrichmentRequired, true);
 assert.equal(seed.seedPolicy.jobLevel, "general");

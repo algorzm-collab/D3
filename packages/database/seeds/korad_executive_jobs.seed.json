@@ -5,6 +5,11 @@
     "institution": "KORAD",
     "sourceType": "received_project_material",
     "documentType": "job_registry_seed",
+    "contentClass": "reference_sample",
+    "usageBoundary": "schema_parser_validation_not_product_content",
+    "tenantScopeRule": "must be loaded only into an authorized tenant or local reference workspace",
+    "salesUseRule": "use only as anonymized pattern or explicitly approved institution-specific reference",
+    "productContentRule": "must not ship as default D3HR content",
     "extractedPages": 1,
     "sourceCompleteness": "toc_only",
     "enrichmentRequired": true
@@ -66,4 +71,3 @@
     { "sourceOrder": 47, "rawTitle": "운반저장기술 총괄", "normalizedTitle": "운반저장기술", "sourcePage": 1 }
   ]
 }
-

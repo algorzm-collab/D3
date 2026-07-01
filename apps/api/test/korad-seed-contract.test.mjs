@@ -9,6 +9,9 @@ const seed = JSON.parse(
 );
 
 assert.equal(seed.sourceDocument.documentType, "job_registry_seed");
+assert.equal(seed.sourceDocument.contentClass, "reference_sample");
+assert.equal(seed.sourceDocument.usageBoundary, "schema_parser_validation_not_product_content");
+assert.equal(seed.sourceDocument.productContentRule, "must not ship as default D3HR content");
 assert.equal(seed.sourceDocument.enrichmentRequired, true);
 assert.equal(seed.seedPolicy.enrichmentStatus, "seed_only");
 assert.equal(seed.seedPolicy.jobLevel, "executive");
@@ -23,4 +26,3 @@ for (const job of seed.jobs) {
 }
 
 console.log("KORAD executive job seed tests passed.");
-

@@ -12,6 +12,8 @@
 
 This source is a structured job-description body, not a simple job list. For D3HR it is seed material for the core JobDB, career graph, performance indicators, learning recommendations, workforce planning, and benchmark packs.
 
+This source is a reference sample. It validates ingestion and decomposition design; it is not D3HR-owned product content, default demo content, or a reusable sales content library.
+
 The source must never be treated as final truth. It is the first evidence layer. Every extracted value must keep the raw section, source document id, extraction date, version, and later enrichment history.
 
 ## Repeating Form

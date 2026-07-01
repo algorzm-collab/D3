@@ -22,8 +22,13 @@ Define D3HR job-description fields at a level that can drive database schema, UI
 | job_family | Job Core | Job family | enum/relation | yes | internal | yes | partial | JobDB |
 | job_series | Job Core | Job series | enum/relation | yes | internal | yes | partial | JobDB |
 | job_title | Job Core | Job title | text | yes | internal | yes | partial | JobDB |
+| base_date | Job Core | Base date | date | yes | internal | yes | no | Versioning, Benchmark |
 | job_purpose | Job Core | Job purpose | text | yes | internal | yes | partial | Evidence Pack |
+| job_mission | Job Core | Job mission | text/list | yes | internal | yes | partial | Work & OKR, Evidence Pack |
 | job_components | Job Core | Job components | relation/list | yes | internal | yes | yes | Work & OKR |
+| task_importance | Job Core | Task importance | number/list | yes | internal | yes | partial | Workload, Workforce |
+| task_difficulty | Job Core | Task difficulty | number/list | yes | internal | yes | partial | Workload, Workforce |
+| job_size | Job Core | Job size | number/list | yes | restricted | yes | partial | Workload, Workforce, AI Impact |
 | management_system | Job Core | Management system | text/enum | yes | internal | yes | no | Admin |
 | legal_or_policy_basis | Job Core | Legal/policy basis | relation/text | yes | restricted | yes | no | Evidence Pack |
 | ncs_mapping | Job Core | NCS mapping | relation | yes | internal | yes | yes | JobDB |
@@ -76,6 +81,7 @@ Define D3HR job-description fields at a level that can drive database schema, UI
 | prior_job | Mobility | Prior job | relation | yes | internal | yes | no | Career |
 | next_job | Mobility | Next job | relation | yes | internal | yes | no | Career |
 | transition_job | Mobility | Transition job | relation | yes | internal | yes | no | Career |
+| job_fit_flags | Mobility | Job fit flags | tag/list | yes | internal | yes | no | Veteran, Placement, Recruitment |
 | talent_type | Targeted Talent | Talent type | enum/tag | yes | internal | yes | no | Career, Recruitment |
 | talent_size | Targeted Talent | Talent size | number | no | restricted | yes | no | Workforce |
 | talent_pool | Targeted Talent | Talent pool | relation | no | sensitive | yes | no | Workforce |
@@ -98,4 +104,3 @@ Every field must be traceable to:
 - a workflow state,
 - a versioning rule,
 - and an evidence or benchmark use case.
-

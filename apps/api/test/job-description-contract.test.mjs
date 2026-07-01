@@ -28,12 +28,21 @@ for (const field of [
   "business_strategy",
   "required_job_competency",
   "job_classification",
+  "job_series",
+  "base_date",
   "job_purpose",
+  "job_mission",
   "required_competency",
+  "task_importance",
+  "task_difficulty",
+  "job_size",
   "job_evaluation_factor",
   "measurement_method",
   "competency_gap_rule",
   "movement_criteria",
+  "prior_job",
+  "next_job",
+  "job_fit_flags",
   "talent_type"
 ]) {
   assert.match(catalog, new RegExp(field));
@@ -41,4 +50,3 @@ for (const field of [
 }
 
 console.log("Job Description contract tests passed.");
-

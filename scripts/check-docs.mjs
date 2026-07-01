@@ -11,6 +11,8 @@ const requiredFiles = [
   "docs/02_modules/MODULE_DOC_STANDARD.md",
   "docs/02_modules/jobdb/JOB_DESCRIPTION_ELEMENT_ARCHITECTURE.md",
   "docs/02_modules/jobdb/JOB_DESCRIPTION_FIELD_CATALOG.md",
+  "docs/02_modules/jobdb/JOB_DESCRIPTION_DECOMPOSITION_PLAYBOOK.md",
+  "docs/02_modules/jobdb/KORAD_GENERAL_JOB_DESCRIPTION_ANALYSIS.md",
   "docs/03_architecture/DATA_LINKAGE_ARCHITECTURE.md",
   "docs/04_policies/ACCESS_CONTROL_POLICY.md",
   "docs/05_sop/FEATURE_DEVELOPMENT_SOP.md",
@@ -21,7 +23,8 @@ const requiredFiles = [
   "docs/07_decisions/ADR-0001-product-positioning.md",
   "docs/07_decisions/ADR-0004-persona-hooks-and-dau-loop.md",
   "docs/07_decisions/ADR-0005-job-description-as-hr-data-hub.md",
-  "docs/07_decisions/ADR-0006-seed-data-versioning-and-timeseries.md"
+  "docs/07_decisions/ADR-0006-seed-data-versioning-and-timeseries.md",
+  "docs/07_decisions/ADR-0007-korad-general-job-description-decomposition.md"
 ];
 
 const missing = [];

@@ -1,0 +1,49 @@
+name: D3HR Failure-Prevention Review
+description: Convert a founder correction, risk, drift, or repeated failure signal into a tracked control.
+title: "[Failure Prevention]: "
+labels: ["risk:scope-drift", "docs-required"]
+body:
+  - type: textarea
+    id: signal
+    attributes:
+      label: Founder Signal or Failure Pattern
+      description: What correction, anxiety, drift, or failure signal triggered this?
+    validations:
+      required: true
+  - type: dropdown
+    id: affected_boundary
+    attributes:
+      label: Affected Boundary
+      options:
+        - product_identity
+        - mvp_scope
+        - data_boundary
+        - access_policy
+        - jobdb_depth
+        - dau_evidence_loop
+        - tenant_customization
+        - github_traceability
+        - sales_demo
+    validations:
+      required: true
+  - type: textarea
+    id: risk
+    attributes:
+      label: Risk If Ignored
+      description: What breaks if we do nothing?
+    validations:
+      required: true
+  - type: textarea
+    id: control
+    attributes:
+      label: Required Control
+      description: What doc, test, policy, ADR, template, or implementation should prevent recurrence?
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance Check
+      description: How do we prove the risk is controlled?
+    validations:
+      required: true

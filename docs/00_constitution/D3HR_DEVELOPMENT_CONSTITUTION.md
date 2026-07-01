@@ -4,7 +4,7 @@
 
 GitHub is the configuration-management, version-control, release, archive, and institutional-memory system for D3HR.
 
-GitHub is operated through issues, branches, pull requests, reviews, checks, tags, releases, projects, and ADRs. See `docs/05_sop/GITHUB_OPERATING_MODEL.md`.
+GitHub is operated through issues, branches, pull requests, reviews, checks, tags, releases, projects, and ADRs. See `docs/00_constitution/D3HR_GITHUB_CONSTITUTION.md` and `docs/05_sop/GITHUB_OPERATING_MODEL.md`.
 
 ## Development Ratio
 
@@ -20,7 +20,7 @@ Development and documentation have equal weight.
 ## Hierarchy
 
 ```text
-Constitution -> Module -> Policy -> Guideline -> Procedure -> Autonomy
+Product Constitution -> Development Constitution -> GitHub Constitution -> Module -> Policy -> Guideline -> Procedure -> Autonomy
 ```
 
 Lower levels cannot override higher levels.

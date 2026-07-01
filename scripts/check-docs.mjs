@@ -36,7 +36,8 @@ const requiredFiles = [
   "docs/07_decisions/ADR-0007-korad-general-job-description-decomposition.md",
   "docs/07_decisions/ADR-0008-github-as-development-operating-system.md",
   "docs/07_decisions/ADR-0009-interaction-based-development-plan.md",
-  "docs/07_decisions/ADR-0010-atomic-task-row-parser.md"
+  "docs/07_decisions/ADR-0010-atomic-task-row-parser.md",
+  "docs/07_decisions/ADR-0011-expanded-public-hr-role-boundaries.md"
 ];
 
 const missing = [];

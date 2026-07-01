@@ -72,9 +72,9 @@ export type PolicyAction =
 export interface ActorContext {
   tenantId: TenantId;
   userId: UserId;
-  roles: D3hrRole[];
+  roles: Array<D3hrRole | Phase2Role>;
   organizationIds: OrganizationId[];
-  delegatedRole?: D3hrRole;
+  delegatedRole?: D3hrRole | Phase2Role;
   activeCycleId?: UUID;
 }
 
@@ -84,6 +84,7 @@ export interface ResourceContext {
   resourceId?: UUID;
   ownerUserId?: UserId;
   organizationId?: OrganizationId;
+  scope?: OrgScope;
   workflowState?: WorkflowState;
   sensitivity: DataSensitivity;
   cycleId?: UUID;

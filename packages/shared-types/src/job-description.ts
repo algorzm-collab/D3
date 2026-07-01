@@ -62,3 +62,13 @@ export interface JobDescriptionFieldValue {
   valueJson?: unknown;
 }
 
+export interface JobAtomicTaskRow {
+  order: number;
+  taskGroup: string | null;
+  subTask: string;
+  importance: number;
+  difficulty: number;
+  jobSize: number;
+  sourceLine: string;
+  parserVersion: "task_row_v1";
+}

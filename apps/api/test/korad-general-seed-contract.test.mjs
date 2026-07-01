@@ -33,6 +33,17 @@ assert.ok(firstJob.sections.careerPath.length > 0);
 assert.ok(firstJob.sections.jobKpi.length > 0);
 assert.ok(firstJob.parsed.missions.length > 0);
 assert.ok(firstJob.parsed.taskRowEstimate > 0);
+assert.ok(firstJob.parsed.atomicTasks.length > 0);
+assert.equal(firstJob.parsed.atomicTasks.length, firstJob.parsed.taskRowEstimate);
+
+const firstAtomicTask = firstJob.parsed.atomicTasks[0];
+assert.equal(firstAtomicTask.parserVersion, "task_row_v1");
+assert.equal(typeof firstAtomicTask.order, "number");
+assert.equal(typeof firstAtomicTask.subTask, "string");
+assert.equal(typeof firstAtomicTask.importance, "number");
+assert.equal(typeof firstAtomicTask.difficulty, "number");
+assert.equal(typeof firstAtomicTask.jobSize, "number");
+assert.ok(firstAtomicTask.sourceLine.length > 0);
 
 for (const field of [
   "job_series",
@@ -64,6 +75,12 @@ for (const job of seed.jobs) {
   assert.ok(job.sections.jobInfo.length > 0);
   assert.ok(job.sections.taskContent.length > 0);
   assert.ok(job.sections.jobKpi.length > 0);
+  assert.ok(job.parsed.atomicTasks.length > 0);
+  assert.equal(job.parsed.atomicTasks.length, job.parsed.taskRowEstimate);
+  assert.ok(job.parsed.atomicTasks.every((task) => task.parserVersion === "task_row_v1"));
 }
+
+const totalAtomicTasks = seed.jobs.reduce((sum, job) => sum + job.parsed.atomicTasks.length, 0);
+assert.equal(totalAtomicTasks, 431);
 
 console.log("KORAD general job description seed tests passed.");

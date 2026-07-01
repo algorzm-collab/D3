@@ -166,6 +166,24 @@ create table tasks (
   updated_at text not null
 );
 
+create table job_atomic_tasks (
+  id text primary key,
+  tenant_id text not null references tenants(id),
+  job_version_id text not null references job_versions(id),
+  source_seed_item_id text references source_seed_items(id),
+  source_order integer not null,
+  task_group text,
+  sub_task text not null,
+  importance real not null,
+  difficulty real not null,
+  job_size real not null,
+  source_line text not null,
+  parser_version text not null,
+  created_at text not null,
+  updated_at text not null,
+  unique (tenant_id, job_version_id, source_order, parser_version)
+);
+
 create table competencies (
   id text primary key,
   tenant_id text not null references tenants(id),

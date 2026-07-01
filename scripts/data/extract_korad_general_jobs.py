@@ -121,6 +121,55 @@ def count_task_rows(text: str):
     return count
 
 
+def parse_atomic_tasks(text: str):
+    tasks = []
+    current_group = None
+    pending_title_parts = []
+    metric_pattern = re.compile(r"^(?P<title>.*?)(?P<importance>\d+(?:\.\d+)?)\s+(?P<difficulty>\d+(?:\.\d+)?)\s+(?P<job_size>\d+(?:\.\d+)?)$")
+
+    for raw_line in text.splitlines():
+        line = " ".join(raw_line.split())
+        if not line:
+            continue
+        if line.startswith("과업(Task)") or line.startswith("--- page"):
+            continue
+        if re.match(r"^.+\s+합계\s+\d+(?:\.\d+)?$", line):
+            continue
+        if re.match(r"^\d+(?:\.\d+)?$", line):
+            pending_title_parts = []
+            continue
+
+        match = metric_pattern.match(line)
+        if match:
+            title = match.group("title").strip()
+            if pending_title_parts:
+                title = " ".join([*pending_title_parts, title]).strip()
+                pending_title_parts = []
+            if title:
+                tasks.append(
+                    {
+                        "order": len(tasks) + 1,
+                        "taskGroup": current_group,
+                        "subTask": title,
+                        "importance": float(match.group("importance")),
+                        "difficulty": float(match.group("difficulty")),
+                        "jobSize": float(match.group("job_size")),
+                        "sourceLine": raw_line,
+                        "parserVersion": "task_row_v1",
+                    }
+                )
+            continue
+
+        if len(line) <= 30 and not re.search(r"\d", line):
+            current_group = line if current_group is None else f"{current_group} {line}".strip()
+            pending_title_parts = []
+            continue
+
+        pending_title_parts.append(line)
+
+    return tasks
+
+
 def to_seed_job(job):
     spans = section_spans(job["rawBlock"])
     info = parse_job_info(spans.get("job_info", ""))
@@ -150,6 +199,7 @@ def to_seed_job(job):
         "parsed": {
             "missions": parse_missions(spans.get("job_mission", "")),
             "taskRowEstimate": count_task_rows(spans.get("task_content", "")),
+            "atomicTasks": parse_atomic_tasks(spans.get("task_content", "")),
             "recommendedCertifications": parse_recommended_certifications(
                 spans.get("certification_recommendation", "")
             ),
@@ -178,6 +228,7 @@ def to_seed_job(job):
 
 
 def write_analysis_doc(seed_jobs, text):
+    atomic_task_count = sum(len(job["parsed"]["atomicTasks"]) for job in seed_jobs)
     titles = "\n".join(
         f"- {job['sourceOrder']}. {job['normalizedTitle']} ({job.get('jobSeries') or '직렬 미확정'}, "
         f"기준일 {job.get('baseDate') or '미확정'}, 과업행 추정 {job['parsed']['taskRowEstimate']})"
@@ -192,6 +243,7 @@ def write_analysis_doc(seed_jobs, text):
 - Pages: 224
 - Extracted text chars: {len(text)}
 - Parsed jobs: {len(seed_jobs)}
+- Parsed atomic task rows: {atomic_task_count}
 - Base date pattern: `24.09.23`
 
 ## Interpretation
@@ -238,9 +290,18 @@ The unit of capture is not only `job`. D3HR decomposes each job into source docu
 
 ## Next Parsing Depth
 
-The next parser iteration must split the raw sections into atomic rows:
+`task_row_v1` now splits the `과업(Task) 내용` section into atomic task rows:
 
-- task group, sub-task, importance, difficulty, JOB-SIZE
+- task group
+- sub-task
+- importance
+- difficulty
+- JOB-SIZE
+- source line
+- parser version
+
+The next parser iteration must split additional raw sections into atomic rows:
+
 - common competency, technical competency, definition, competency element
 - course title, learning method, required education level
 - certificate title, relevance level, issuer or note
@@ -281,7 +342,7 @@ def main():
             "enrichmentStatus": "field_values_started",
             "versioningRule": "preserve extracted raw sections and convert section values into versioned JobDB field values",
             "timeSeriesRule": "track baseDate, first_seen_at, field version changes, and later enrichment events",
-            "atomicDecompositionRule": "sections are seeds; tasks, competencies, learning, certificates, career links, and KPIs become atomic rows in later parser versions",
+            "atomicDecompositionRule": "sections are seeds; task rows are parsed in task_row_v1; competencies, learning, certificates, career links, and KPIs become atomic rows in later parser versions",
         },
         "jobs": seed_jobs,
     }

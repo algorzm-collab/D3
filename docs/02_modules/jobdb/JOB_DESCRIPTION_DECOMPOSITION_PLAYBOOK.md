@@ -47,6 +47,25 @@ KORAD is a reference sample for schema and parser validation. It is not a built-
 - `직무 KPI` is a bridge from JobDB to performance evidence and public-sector management evaluation.
 - Career path links are graph data, not memo text.
 
+## Atomic Task Parser v1
+
+`task_row_v1` extracts task rows from the `과업(Task) 내용` section.
+
+| Field | Meaning |
+|---|---|
+| `order` | order inside the job task section |
+| `taskGroup` | nearest task group inferred from preceding lines |
+| `subTask` | atomic task statement |
+| `importance` | source importance score |
+| `difficulty` | source difficulty score |
+| `jobSize` | source JOB-SIZE score |
+| `sourceLine` | original extracted line |
+| `parserVersion` | parser contract version |
+
+Known v1 limitation: PDF table extraction can split task group labels across lines. `taskGroup` is therefore an inferred helper field, while `subTask`, `importance`, `difficulty`, `jobSize`, and `sourceLine` are the stronger contract fields.
+
+Next parser versions should add source page, task group normalization, subtotal validation, and row-level confidence.
+
 ## DAU Hook
 
 The daily user hook comes from making these fields useful to each persona:

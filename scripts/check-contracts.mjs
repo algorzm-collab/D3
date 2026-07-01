@@ -28,6 +28,7 @@ const requiredMigrationTerms = [
   "job_description_element_groups",
   "job_description_fields",
   "job_description_field_values",
+  "job_atomic_tasks",
   "source_documents",
   "source_seed_items",
   "job_seed_links",

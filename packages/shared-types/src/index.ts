@@ -103,5 +103,6 @@ export type {
   JobDescriptionFieldDataType,
   JobDescriptionFieldDefinition,
   JobDescriptionFieldValue,
-  JobDescriptionSourceType
+  JobDescriptionSourceType,
+  JobAtomicTaskRow
 } from "./job-description";

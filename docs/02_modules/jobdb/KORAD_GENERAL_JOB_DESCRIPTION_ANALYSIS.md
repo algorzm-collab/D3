@@ -6,13 +6,12 @@
 - Pages: 224
 - Extracted text chars: 134450
 - Parsed jobs: 35
+- Parsed atomic task rows: 431
 - Base date pattern: `24.09.23`
 
 ## Interpretation
 
 This source is a structured job-description body, not a simple job list. For D3HR it is seed material for the core JobDB, career graph, performance indicators, learning recommendations, workforce planning, and benchmark packs.
-
-This source is a reference sample. It validates ingestion and decomposition design; it is not D3HR-owned product content, default demo content, or a reusable sales content library.
 
 The source must never be treated as final truth. It is the first evidence layer. Every extracted value must keep the raw section, source document id, extraction date, version, and later enrichment history.
 
@@ -88,9 +87,18 @@ The unit of capture is not only `job`. D3HR decomposes each job into source docu
 
 ## Next Parsing Depth
 
-The next parser iteration must split the raw sections into atomic rows:
+`task_row_v1` now splits the `과업(Task) 내용` section into atomic task rows:
 
-- task group, sub-task, importance, difficulty, JOB-SIZE
+- task group
+- sub-task
+- importance
+- difficulty
+- JOB-SIZE
+- source line
+- parser version
+
+The next parser iteration must split additional raw sections into atomic rows:
+
 - common competency, technical competency, definition, competency element
 - course title, learning method, required education level
 - certificate title, relevance level, issuer or note

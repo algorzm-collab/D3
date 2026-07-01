@@ -27,6 +27,7 @@ const requiredFiles = [
   "docs/05_sop/RELEASE_AND_ARCHIVE_SOP.md",
   "docs/06_specs/API_CONVENTIONS.md",
   "docs/06_specs/AUDIT_LOG_SPEC.md",
+  "docs/06_specs/GENERIC_DUMMY_DEMO_DATA_SPEC.md",
   "docs/06_specs/PERSONA_HOME_SPEC.md",
   "docs/08_testing/ACCESS_CONTROL_TEST_MATRIX.md",
   "docs/07_decisions/ADR-0001-product-positioning.md",
@@ -37,7 +38,8 @@ const requiredFiles = [
   "docs/07_decisions/ADR-0008-github-as-development-operating-system.md",
   "docs/07_decisions/ADR-0009-interaction-based-development-plan.md",
   "docs/07_decisions/ADR-0010-atomic-task-row-parser.md",
-  "docs/07_decisions/ADR-0011-expanded-public-hr-role-boundaries.md"
+  "docs/07_decisions/ADR-0011-expanded-public-hr-role-boundaries.md",
+  "docs/07_decisions/ADR-0012-generic-dummy-demo-data.md"
 ];
 
 const missing = [];

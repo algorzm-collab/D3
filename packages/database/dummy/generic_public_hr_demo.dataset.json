@@ -1,0 +1,96 @@
+{
+  "datasetMetadata": {
+    "id": "generic_public_hr_demo_v1",
+    "contentClass": "generic_dummy",
+    "usageBoundary": "sales_demo_and_local_development_only",
+    "productContentRule": "fictional_content_may_ship_as_demo_fixture",
+    "institutionInputRule": "must not contain real institution source content",
+    "createdFor": "D3HR multi-institution sales demo"
+  },
+  "tenant": {
+    "id": "tenant_demo_public_agency",
+    "name": "대한공공서비스원",
+    "publicInstitutionType": "fictional_public_institution"
+  },
+  "organizations": [
+    { "id": "org_strategy", "name": "전략기획실", "parentOrganizationId": null },
+    { "id": "org_hr", "name": "인재경영실", "parentOrganizationId": null },
+    { "id": "org_field", "name": "현장운영본부", "parentOrganizationId": null }
+  ],
+  "jobs": [
+    {
+      "id": "job_public_strategy_planning",
+      "title": "공공전략기획",
+      "jobSeries": "경영기획",
+      "mission": "기관 전략과 정부정책 요구를 연결하여 실행 가능한 공공성과 계획을 수립한다.",
+      "atomicTasks": [
+        {
+          "order": 1,
+          "taskGroup": "전략수립",
+          "subTask": "정부정책 변화 분석 및 기관 전략과제 도출",
+          "importance": 8,
+          "difficulty": 7,
+          "jobSize": 1.1,
+          "parserVersion": "dummy_task_v1"
+        },
+        {
+          "order": 2,
+          "taskGroup": "성과관리",
+          "subTask": "전략과제별 성과지표 정의 및 월간 진척 점검",
+          "importance": 7,
+          "difficulty": 6,
+          "jobSize": 0.9,
+          "parserVersion": "dummy_task_v1"
+        }
+      ]
+    },
+    {
+      "id": "job_hr_placement",
+      "title": "직무중심인사배치",
+      "jobSeries": "인사관리",
+      "mission": "직무, 역량, 경력희망, 조직수요를 근거로 설명 가능한 배치안을 설계한다.",
+      "atomicTasks": [
+        {
+          "order": 1,
+          "taskGroup": "배치설계",
+          "subTask": "직무요건과 직원 역량데이터 기반 후보군 분석",
+          "importance": 9,
+          "difficulty": 8,
+          "jobSize": 1.4,
+          "parserVersion": "dummy_task_v1"
+        },
+        {
+          "order": 2,
+          "taskGroup": "경력관리",
+          "subTask": "직원별 다음 경력경로와 필요 교육 추천",
+          "importance": 8,
+          "difficulty": 7,
+          "jobSize": 1.0,
+          "parserVersion": "dummy_task_v1"
+        }
+      ]
+    }
+  ],
+  "personas": [
+    {
+      "role": "employee",
+      "displayName": "김도윤",
+      "dailyHook": "오늘 내 직무미션과 연결된 업무 진척을 확인한다."
+    },
+    {
+      "role": "manager",
+      "displayName": "박서연",
+      "dailyHook": "팀 과업 과부하와 지원요청을 확인한다."
+    },
+    {
+      "role": "hr",
+      "displayName": "이하준",
+      "dailyHook": "배치, 역량, 교육 추천의 근거 데이터를 점검한다."
+    }
+  ],
+  "dashboardMetrics": [
+    { "code": "jobdb_completion_rate", "label": "직무기술서 구조화율", "value": 68, "unit": "%" },
+    { "code": "daily_checkin_rate", "label": "일일 업무체크 참여율", "value": 74, "unit": "%" },
+    { "code": "career_path_coverage", "label": "경력경로 연결률", "value": 52, "unit": "%" }
+  ]
+}

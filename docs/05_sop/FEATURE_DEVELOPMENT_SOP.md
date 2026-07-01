@@ -14,11 +14,13 @@
 10. Add tests or acceptance checks.
 11. Update module docs.
 12. Open PR with documentation links.
-13. Pass code review and doc review.
-14. Merge.
-15. Update release note if user-facing.
+13. Complete PR constitution, data-boundary, policy, audit, documentation, and test checklist.
+14. Pass code review and doc review.
+15. Merge.
+16. Tag or update release note if user-facing or milestone-level.
 
 ## Definition of Done
 
 Implementation without updated documentation is not done.
 
+Implementation without GitHub traceability is not done once the repository is connected to GitHub.

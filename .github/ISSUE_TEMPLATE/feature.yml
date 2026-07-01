@@ -1,43 +1,68 @@
-name: Feature
-description: Propose a D3HR feature
-title: "[Feature] "
-labels: ["type:feature"]
+name: D3HR Feature
+description: Propose a module-scoped D3HR feature or change.
+title: "[Feature]: "
+labels: ["docs-required"]
 body:
-  - type: textarea
-    id: problem
-    attributes:
-      label: Problem
-      description: Which persona and HR decision does this solve?
-    validations:
-      required: true
   - type: dropdown
     id: module
     attributes:
       label: Module
       options:
-        - Identity & Access
-        - JobDB
-        - Work & OKR
-        - Performance Evidence
-        - Career & Learning
-        - Placement & Workforce
-        - Public HR Evidence Pack
-        - Community & Benchmark
-        - Admin & Operations
+        - jobdb
+        - work-okr
+        - career
+        - policy
+        - admin
+        - web
+        - api
+        - database
+    validations:
+      required: true
+  - type: dropdown
+    id: data_class
+    attributes:
+      label: Data Class
+      options:
+        - product_schema
+        - generic_dummy
+        - institution_input
+        - reference_sample
+        - benchmark_aggregate
+        - tenant_configuration
     validations:
       required: true
   - type: textarea
-    id: policy
+    id: problem
     attributes:
-      label: Policy / Permission Impact
-      description: Role, org scope, data sensitivity, workflow state, and audit-log impact.
+      label: Problem
+      description: What public-HR problem does this solve?
     validations:
       required: true
   - type: textarea
-    id: acceptance
+    id: persona_hook
     attributes:
-      label: Acceptance Criteria
-      description: Concrete completion criteria.
+      label: Persona Hook
+      description: Which persona uses this and why would they return?
     validations:
       required: true
-
+  - type: textarea
+    id: policy_impact
+    attributes:
+      label: Policy and Permission Impact
+      description: Roles, sensitivity, workflow, tenant, org scope, audit.
+    validations:
+      required: true
+  - type: textarea
+    id: data_impact
+    attributes:
+      label: Data Model Impact
+      description: Tables, fields, source lineage, versioning, time series.
+    validations:
+      required: true
+  - type: textarea
+    id: docs_tests
+    attributes:
+      label: Documentation and Tests
+      description: Required docs, ADR, tests, and acceptance checks.
+    validations:
+      required: true

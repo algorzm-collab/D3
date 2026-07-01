@@ -23,6 +23,7 @@ This document lists the most likely reasons and the controls that prevent recurr
 - PR template requires documentation gate.
 - Releases require tags.
 - Abandoned ideas move to archive.
+- GitHub operating model is required: issue, branch, PR, review, checks, merge, tag/release.
 
 ## Failure 2: Constitution Is Not Used
 
@@ -156,4 +157,4 @@ Development must stop for correction if:
 - MVP scope breach happens twice in parallel.
 - Tenant-specific code branch appears.
 - AI behaves as final evaluator or final placement authority.
-
+- Institution or reference sample content is proposed as default product/demo content.

@@ -4,6 +4,8 @@
 
 GitHub is the configuration-management, version-control, release, archive, and institutional-memory system for D3HR.
 
+GitHub is operated through issues, branches, pull requests, reviews, checks, tags, releases, projects, and ADRs. See `docs/05_sop/GITHUB_OPERATING_MODEL.md`.
+
 ## Development Ratio
 
 Development and documentation have equal weight.
@@ -33,6 +35,7 @@ A change is not complete until:
 - audit impact is reviewed,
 - tests or acceptance checks exist,
 - release or decision notes are updated when relevant.
+- GitHub issue and PR gates are satisfied when the work is tracked there.
 
 ## Recovery Protocol
 
@@ -46,4 +49,3 @@ When context is lost or implementation breaks:
 6. Read latest release notes.
 7. Run available tests.
 8. Continue from documented state.
-

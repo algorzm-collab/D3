@@ -1,10 +1,13 @@
 import { access } from "node:fs/promises";
 
 const requiredFiles = [
+  ".github/ISSUE_TEMPLATE/feature.yml",
+  ".github/pull_request_template.md",
   "docs/00_constitution/D3HR_PRODUCT_CONSTITUTION.md",
   "docs/00_constitution/D3HR_DEVELOPMENT_CONSTITUTION.md",
   "docs/00_constitution/D3HR_MVP_SCOPE.md",
   "docs/00_constitution/D3HR_PREMORTEM.md",
+  "docs/00_constitution/D3HR_PROJECT_PLAN_FAILURE_PREVENTION_REVIEW.md",
   "docs/00_constitution/D3HR_ROADMAP.md",
   "docs/01_domain/PERSONA_HOOKING_STRATEGY.md",
   "docs/01_domain/DAU_LOOP_DESIGN.md",
@@ -17,6 +20,8 @@ const requiredFiles = [
   "docs/03_architecture/DATA_BOUNDARY_AND_INPUT_CLASSIFICATION.md",
   "docs/04_policies/ACCESS_CONTROL_POLICY.md",
   "docs/05_sop/FEATURE_DEVELOPMENT_SOP.md",
+  "docs/05_sop/GITHUB_OPERATING_MODEL.md",
+  "docs/05_sop/RELEASE_AND_ARCHIVE_SOP.md",
   "docs/06_specs/API_CONVENTIONS.md",
   "docs/06_specs/AUDIT_LOG_SPEC.md",
   "docs/06_specs/PERSONA_HOME_SPEC.md",
@@ -25,7 +30,8 @@ const requiredFiles = [
   "docs/07_decisions/ADR-0004-persona-hooks-and-dau-loop.md",
   "docs/07_decisions/ADR-0005-job-description-as-hr-data-hub.md",
   "docs/07_decisions/ADR-0006-seed-data-versioning-and-timeseries.md",
-  "docs/07_decisions/ADR-0007-korad-general-job-description-decomposition.md"
+  "docs/07_decisions/ADR-0007-korad-general-job-description-decomposition.md",
+  "docs/07_decisions/ADR-0008-github-as-development-operating-system.md"
 ];
 
 const missing = [];

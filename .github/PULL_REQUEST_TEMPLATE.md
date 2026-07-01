@@ -1,40 +1,39 @@
 ## Summary
 
--
-
-## Module
-
-- [ ] Identity & Access
-- [ ] JobDB
-- [ ] Work & OKR
-- [ ] Performance Evidence
-- [ ] Career & Learning
-- [ ] Placement & Workforce
-- [ ] Public HR Evidence Pack
-- [ ] Community & Benchmark
-- [ ] Admin & Operations
-- [ ] Documentation / Governance
-
 ## Constitution Gate
 
-- [ ] Reinforces job-centered HR evidence
-- [ ] Preserves tenant/data isolation
-- [ ] Includes access policy impact
-- [ ] Includes audit-log impact
-- [ ] Avoids AI-only final HR decisions
-- [ ] Does not introduce undocumented customization
+- [ ] Product identity preserved: Public HR Evidence OS
+- [ ] MVP scope checked
+- [ ] Do-not-build list checked
+- [ ] No tenant-specific code branch or hardcoded customer behavior
 
-## Documentation Gate
+## Data Boundary
+
+- [ ] Data class declared: product schema / generic dummy / institution input / reference sample / benchmark aggregate / tenant configuration
+- [ ] Real institution input is not used as default product content
+- [ ] Source lineage and versioning are preserved where relevant
+
+## Policy, Audit, And Security
+
+- [ ] Tenant isolation reviewed
+- [ ] RBAC/ABAC/workflow impact reviewed
+- [ ] Audit-log impact reviewed
+- [ ] Sensitive reads/writes have tests
+
+## Documentation
 
 - [ ] Module docs updated
-- [ ] Policy docs updated
-- [ ] Data model docs updated
-- [ ] API/UI specs updated
-- [ ] SOP updated
-- [ ] ADR added or updated, if decision is material
-- [ ] Release note updated, if user-facing
+- [ ] API/UI/data docs updated where relevant
+- [ ] ADR added or updated if this changes direction
+- [ ] Release note or milestone note updated if user-facing
 
-## Verification
+## Tests
 
--
+- [ ] Automated tests added/updated
+- [ ] `npm.cmd test` passes locally
 
+## Links
+
+Issue:
+ADR:
+Relevant docs:

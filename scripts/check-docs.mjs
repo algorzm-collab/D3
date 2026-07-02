@@ -30,6 +30,7 @@ const requiredFiles = [
   "docs/06_specs/GENERIC_DUMMY_DEMO_DATA_SPEC.md",
   "docs/06_specs/PERSONA_HOME_SPEC.md",
   "docs/08_testing/ACCESS_CONTROL_TEST_MATRIX.md",
+  "docs/09_operations/ANTIGRAVITY_HANDOFF_STATUS.md",
   "docs/07_decisions/ADR-0001-product-positioning.md",
   "docs/07_decisions/ADR-0004-persona-hooks-and-dau-loop.md",
   "docs/07_decisions/ADR-0005-job-description-as-hr-data-hub.md",

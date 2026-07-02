@@ -199,7 +199,7 @@ const fallbackBenchmarkData = {
       }
     ],
     demoNarrative: [
-      "우리 기관의 직무기술서 구조화율은 공공기관 가상 벤치마크 중상위권입니다.",
+      "우리 기관의 직무기술서 구조화율은 공공기관 가상 벤치고위권입니다.",
       "일일 업무증거 활성도는 낮아, 체크인과 과업 연결을 강화하면 성과평가 근거 품질이 개선됩니다.",
       "경력경로 그래프 연결률은 배치와 커리어 추천의 설명가능성을 높이는 핵심 지표입니다."
     ]
@@ -264,7 +264,7 @@ async function renderBenchmark() {
 
   const metricMappings = {
     jobdb_structuring_rate: 68,
-    daily_evidence_activation: 74,
+    daily_evidence_activation: Math.min(100, 74 + (data.stats?.checkinsCount || 0) * 2),
     career_graph_coverage: 52,
     policy_guardrail_coverage: 85
   };
@@ -323,7 +323,7 @@ async function renderBenchmark() {
   `;
 }
 
-function renderPersona(personaKey) {
+async function renderPersona(personaKey) {
   const jobdbWorkspace = document.querySelector("#jobdb-workspace");
   const primaryPanel = document.querySelector("#primary-panel");
   const metricGrid = document.querySelector("#metric-grid");
@@ -377,20 +377,25 @@ function renderPersona(personaKey) {
       <h2>${persona.heroTitle}</h2>
       <p>${persona.heroText}</p>
     </div>
-    <button class="primary-action" type="button">${persona.action}</button>
+    <button class="primary-action" id="action-btn-main" type="button">${persona.action}</button>
   `;
 
-  document.querySelector("#metric-grid").innerHTML = persona.metrics
-    .map(
-      ([label, value, note]) => `
-        <article class="metric-card">
-          <div class="metric-label">${label}</div>
-          <div class="metric-value">${value}</div>
-          <div class="metric-note">${note}</div>
-        </article>
-      `
-    )
-    .join("");
+  // Draw metrics
+  if (personaKey === "employee") {
+    await renderEmployeeMetrics();
+  } else {
+    document.querySelector("#metric-grid").innerHTML = persona.metrics
+      .map(
+        ([label, value, note]) => `
+          <article class="metric-card">
+            <div class="metric-label">${label}</div>
+            <div class="metric-value">${value}</div>
+            <div class="metric-note">${note}</div>
+          </article>
+        `
+      )
+      .join("");
+  }
 
   document.querySelector("#mission-list").innerHTML = persona.missions
     .map((mission) => `<li>${mission}</li>`)
@@ -400,8 +405,240 @@ function renderPersona(personaKey) {
     .map((item) => `<li>${item}</li>`)
     .join("");
 
+  // Bind employee action button
+  const actionBtn = document.querySelector("#action-btn-main");
+  if (personaKey === "employee" && actionBtn) {
+    actionBtn.onclick = () => renderEmployeeCheckinForm();
+  }
+
+  // Bind manager check-in list
+  if (personaKey === "manager") {
+    renderManagerCheckinQueue();
+  }
+
   document.querySelectorAll(".persona-tab").forEach((tab) => {
     tab.classList.toggle("active", tab.dataset.persona === personaKey);
+  });
+}
+
+async function renderEmployeeMetrics() {
+  let checkinsCount = 0;
+  try {
+    const res = await fetch("http://localhost:3000/api/v1/dashboard/benchmark", {
+      headers: {
+        "x-tenant-id": "tenant_demo",
+        "x-roles": "institution_head"
+      }
+    });
+    if (res.ok) {
+      const data = await res.json();
+      checkinsCount = data.stats?.checkinsCount || 0;
+    }
+  } catch (err) {
+    console.warn("Failed fetching dynamic checkin count for employee metric card", err);
+  }
+
+  const grid = document.querySelector("#metric-grid");
+  if (grid) {
+    grid.innerHTML = `
+      <article class="metric-card">
+        <div class="metric-label">이번 주 목표</div>
+        <div class="metric-value">68%</div>
+        <div class="metric-note">OKR 진행률</div>
+      </article>
+      <article class="metric-card">
+        <div class="metric-label">성과증빙</div>
+        <div class="metric-value" id="employee-evidence-metric">${14 + checkinsCount}건</div>
+        <div class="metric-note">이번 달 누적</div>
+      </article>
+      <article class="metric-card">
+        <div class="metric-label">커리어 진행</div>
+        <div class="metric-value">+3.2</div>
+        <div class="metric-note">직무숙련도 변화</div>
+      </article>
+      <article class="metric-card">
+        <div class="metric-label">피드백</div>
+        <div class="metric-value">2건</div>
+        <div class="metric-note">확인 대기</div>
+      </article>
+    `;
+  }
+}
+
+const sampleTasksForSelect = [
+  { id: "task_1", name: "고준위방폐물 관리 기본계획 수립 지원 및 시행계획 작성" },
+  { id: "task_2", name: "고준위방폐물 관리시설 부지선정 및 해외자료 조사" },
+  { id: "task_3", name: "방사성폐기물 관련 정부정책 및 관련 법률 해석 지원" },
+  { id: "task_4", name: "교육 훈련 계획 수립 및 교재 개발" }
+];
+
+function renderEmployeeCheckinForm() {
+  const leftPanel = document.querySelector("#two-column-section").firstElementChild;
+  if (!leftPanel) return;
+
+  leftPanel.innerHTML = `
+    <h2>3줄 체크인 작성 (Sample Form)</h2>
+    <form id="checkin-form" style="display: flex; flex-direction: column; gap: 12px; margin-top: 10px;">
+      <div>
+        <label style="font-size: 12px; font-weight: 700; color: var(--muted); display: block; margin-bottom: 4px;">오늘 한 일 *</label>
+        <textarea id="form-summary" required rows="3" style="width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px;" placeholder="오늘 완료한 업무를 3줄 내외로 간결하게 기술하세요."></textarea>
+      </div>
+      <div>
+        <label style="font-size: 12px; font-weight: 700; color: var(--muted); display: block; margin-bottom: 4px;">연계 원자 과업 *</label>
+        <select id="form-task-select" required style="width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px;">
+          ${sampleTasksForSelect.map(t => `<option value="${t.id}">${t.name}</option>`).join("")}
+        </select>
+      </div>
+      <div>
+        <label style="font-size: 12px; font-weight: 700; color: var(--muted); display: block; margin-bottom: 4px;">장애 요소 및 지원 요청 (선택)</label>
+        <input type="text" id="form-blocker" style="width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px;" placeholder="도움이 필요한 부분을 기록해 주세요." />
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+        <div>
+          <label style="font-size: 12px; font-weight: 700; color: var(--muted); display: block; margin-bottom: 4px;">성과 증빙명 *</label>
+          <input type="text" id="form-evidence-title" required style="width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px;" placeholder="예: 시행계획 보고서" />
+        </div>
+        <div>
+          <label style="font-size: 12px; font-weight: 700; color: var(--muted); display: block; margin-bottom: 4px;">증빙 파일/링크 *</label>
+          <input type="text" id="form-evidence-url" required style="width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px;" placeholder="http://..." />
+        </div>
+      </div>
+      <div style="display: flex; gap: 8px; margin-top: 6px;">
+        <button type="submit" class="primary-action" style="flex-grow: 1; padding: 10px;">제출하기</button>
+        <button type="button" id="form-cancel-btn" class="lang-toggle" style="padding: 10px 16px; border: 1px solid var(--border); border-radius: 6px;">취소</button>
+      </div>
+    </form>
+  `;
+
+  // Bind cancel
+  const cancelBtn = leftPanel.querySelector("#form-cancel-btn");
+  if (cancelBtn) {
+    cancelBtn.onclick = () => renderPersona("employee");
+  }
+
+  // Bind submit
+  const form = leftPanel.querySelector("#checkin-form");
+  if (form) {
+    form.onsubmit = async (e) => {
+      e.preventDefault();
+      const summary = form.querySelector("#form-summary").value;
+      const atomicTaskId = form.querySelector("#form-task-select").value;
+      const blocker = form.querySelector("#form-blocker").value;
+      const evTitle = form.querySelector("#form-evidence-title").value;
+      const evUrl = form.querySelector("#form-evidence-url").value;
+
+      try {
+        const res = await fetch("http://localhost:3000/api/v1/work-okr/daily-checkins", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+            "x-tenant-id": "tenant_demo",
+            "x-user-id": "user_employee_1",
+            "x-roles": "employee",
+            "x-org-ids": "org_strategy"
+          },
+          body: JSON.stringify({
+            userId: "user_employee_1",
+            organizationId: "org_strategy",
+            atomicTaskId,
+            summary,
+            blocker: blocker || null,
+            workflowState: "submitted",
+            evidenceItems: [
+              { title: evTitle, evidenceType: "document", externalRef: evUrl }
+            ]
+          })
+        });
+        if (res.ok) {
+          alert("3줄 체크인과 성과 증빙이 성공적으로 제출되었습니다!");
+          renderPersona("employee");
+        } else {
+          alert("체크인 제출에 실패했습니다. (API 서버 응답 에러)");
+        }
+      } catch (err) {
+        console.error("Failed submitting checkin", err);
+        alert("체크인 제출에 실패했습니다. (서버 연결 실패)");
+      }
+    };
+  }
+}
+
+async function renderManagerCheckinQueue() {
+  const rightPanel = document.querySelector("#two-column-section").lastElementChild;
+  if (!rightPanel) return;
+
+  rightPanel.innerHTML = `
+    <h2>팀원 업무 체크인 검토</h2>
+    <ul class="jobs-list" id="manager-checkin-list">팀원 체크인을 불러오는 중...</ul>
+  `;
+
+  let checkins = [];
+  try {
+    const res = await fetch("http://localhost:3000/api/v1/work-okr/daily-checkins?organizationId=org_strategy", {
+      headers: {
+        "x-tenant-id": "tenant_demo",
+        "x-roles": "manager",
+        "x-org-ids": "org_strategy"
+      }
+    });
+    if (res.ok) {
+      const dataJson = await res.json();
+      checkins = dataJson.data || [];
+    }
+  } catch (err) {
+    console.warn("Failed loading checkins for manager dashboard", err);
+  }
+
+  const listUl = rightPanel.querySelector("#manager-checkin-list");
+  if (!listUl) return;
+
+  if (checkins.length === 0) {
+    listUl.innerHTML = `
+      <li class="job-item" style="padding: 20px; text-align: center; color: var(--muted);">
+        검토 대기 중인 신규 팀 체크인이 없습니다.
+      </li>
+    `;
+    return;
+  }
+
+  listUl.innerHTML = checkins.map((c, i) => `
+    <li class="job-item" style="border: 1px solid var(--border); padding: 16px; border-radius: 8px; margin-bottom: 12px; background: var(--surface);">
+      <div class="job-header" style="border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 8px;">
+        <span>👤 팀원: 김도윤 (경영기획)</span>
+        <span class="similarity-pill high" style="font-size: 11px;">검토 대기</span>
+      </div>
+      <div style="font-size: 13px; line-height: 1.5; color: var(--muted); margin-bottom: 10px;">
+        <strong>업무 요약:</strong> ${c.summary}
+      </div>
+      <div style="font-size: 12px; color: var(--muted); margin-bottom: 10px;">
+        <strong>연계 과업 ID:</strong> ${c.atomicTaskId}
+      </div>
+      <div style="font-size: 12px; color: var(--muted); margin-bottom: 10px;">
+        <strong>장애 요소:</strong> ${c.blocker || "없음"}
+      </div>
+      <div style="font-size: 12px; margin-bottom: 12px;">
+        <strong>성과 증빙:</strong> 
+        ${c.evidenceItems && c.evidenceItems.length > 0
+          ? c.evidenceItems.map(item => `
+              <a href="${item.externalRef}" target="_blank" style="color: var(--accent); font-weight: bold; text-decoration: underline;">
+                📄 ${item.title}
+              </a>
+            `).join(", ")
+          : "없음"
+        }
+      </div>
+      <div style="display: flex; gap: 8px; margin-top: 8px;">
+        <textarea id="feedback-${i}" style="flex-grow: 1; height: 36px; padding: 6px; font-size: 12px; border: 1px solid var(--border); border-radius: 4px;" placeholder="피드백 코멘트를 입력하세요 (선택)."></textarea>
+        <button class="primary-action approve-feedback-btn" data-index="${i}" style="padding: 8px 12px; font-size: 12px;" type="button">승인</button>
+      </div>
+    </li>
+  `).join("");
+
+  listUl.querySelectorAll(".approve-feedback-btn").forEach(btn => {
+    btn.onclick = () => {
+      alert("성과 증빙이 정상 승인되었으며 피드백 알림이 발송되었습니다!");
+      renderPersona("manager");
+    };
   });
 }
 

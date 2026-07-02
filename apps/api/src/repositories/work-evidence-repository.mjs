@@ -32,6 +32,10 @@ export function createInMemoryWorkEvidenceRepository() {
       return created;
     },
 
+    async findAll() {
+      return [...evidences];
+    },
+
     async findAllForTest() {
       return [...evidences];
     },

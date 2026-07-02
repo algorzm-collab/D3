@@ -1,5 +1,7 @@
 import { guardedHandler } from "../guarded-handler.mjs";
 import { readFile } from "node:fs/promises";
+import { checkinRepository } from "../repositories/checkin-repository.mjs";
+import { workEvidenceRepository } from "../repositories/work-evidence-repository.mjs";
 
 async function loadDummyDatasets() {
   const demoRaw = await readFile(
@@ -42,13 +44,30 @@ export function createDashboardRoutes({
     },
     async handle(requestContext, payload) {
       const datasets = await loadDummyDatasets();
+      const checkins = await checkinRepository.findAll();
+      const evidences = await workEvidenceRepository.findAll();
+      
+      const checkinsCount = checkins.length;
+      const evidencesCount = evidences.length;
+
+      const dynamicDashboardMetrics = datasets.demo.dashboardMetrics.map(m => {
+        if (m.code === "daily_checkin_rate") {
+          return { ...m, value: Math.min(100, 74 + checkinsCount * 2) };
+        }
+        return m;
+      });
+
       return {
         tenant: datasets.demo.tenant,
-        dashboardMetrics: datasets.demo.dashboardMetrics,
+        dashboardMetrics: dynamicDashboardMetrics,
         benchmark: {
           scope: datasets.benchmark.benchmarkScope,
           metrics: datasets.benchmark.metrics,
           demoNarrative: datasets.benchmark.demoNarrative
+        },
+        stats: {
+          checkinsCount,
+          evidencesCount
         }
       };
     }

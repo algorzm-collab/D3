@@ -23,6 +23,10 @@ export function createInMemoryCheckinRepository() {
       );
     },
 
+    async findAll() {
+      return [...checkins];
+    },
+
     async clearForTest() {
       checkins.length = 0;
     }

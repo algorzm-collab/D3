@@ -1,5 +1,7 @@
 import http from "node:http";
 import { createDailyCheckin, readTeamCheckins } from "./routes/work-okr.mjs";
+import { readBenchmarkDashboard } from "./routes/dashboard.mjs";
+import { readJobsList, readJobDetail } from "./routes/jobs.mjs";
 import { requestContextFromHttp } from "./request-context.mjs";
 
 function sendJson(response, status, body) {
@@ -50,6 +52,23 @@ export function createServer() {
           sensitivity: url.searchParams.get("sensitivity") ?? "restricted"
         };
         const result = await readTeamCheckins(requestContext, payload);
+        return sendJson(response, result.status, result.body);
+      }
+
+      if (request.method === "GET" && url.pathname === "/api/v1/dashboard/benchmark") {
+        const result = await readBenchmarkDashboard(requestContext);
+        return sendJson(response, result.status, result.body);
+      }
+
+      if (request.method === "GET" && url.pathname === "/api/v1/jobs") {
+        const result = await readJobsList(requestContext);
+        return sendJson(response, result.status, result.body);
+      }
+
+      if (request.method === "GET" && url.pathname.startsWith("/api/v1/jobs/")) {
+        const titleEncoded = url.pathname.slice("/api/v1/jobs/".length);
+        const title = decodeURIComponent(titleEncoded);
+        const result = await readJobDetail(requestContext, { title });
         return sendJson(response, result.status, result.body);
       }
 

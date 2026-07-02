@@ -10,6 +10,8 @@ for (const persona of ["employee", "manager", "hr", "institution_head", "consult
 }
 assert.match(html, /data-persona="benchmark"/);
 assert.match(js, /function renderBenchmark\(/);
+assert.match(html, /data-persona="jobdb"/);
+assert.match(js, /function renderJobDBWiki\(/);
 
 for (const required of [
   "daily_checkins",

@@ -23,6 +23,7 @@
           <button class="persona-tab" data-persona="institution_head">기관장</button>
           <button class="persona-tab" data-persona="consultant">컨설턴트</button>
           <button class="persona-tab" data-persona="benchmark">벤치마크 대시보드</button>
+          <button class="persona-tab" data-persona="jobdb">직무기술서 Wiki</button>
         </nav>
       </aside>
 
@@ -48,6 +49,29 @@
             <h2>데이터 연계</h2>
             <ol class="data-flow" id="data-flow"></ol>
           </article>
+        </section>
+
+        <!-- Enterprise SaaS JobDB Wiki workspace -->
+        <section id="jobdb-workspace" style="display: none;">
+          <div class="wiki-header">
+            <div>
+              <h2 class="wiki-subtitle">KORAD 2024년 일반직 직무기술서 표준 데이터셋</h2>
+            </div>
+            <div class="lang-toggle-container">
+              <button class="lang-toggle active" id="lang-ko-btn" type="button">한글</button>
+              <button class="lang-toggle" id="lang-en-btn" type="button">ENG</button>
+            </div>
+          </div>
+          
+          <div class="wiki-layout">
+            <aside class="wiki-sidebar">
+              <input type="text" id="wiki-search" placeholder="직무명 또는 직렬 검색..." />
+              <ul class="wiki-job-list" id="wiki-job-list-ul"></ul>
+            </aside>
+            <main class="wiki-detail" id="wiki-detail-panel">
+              <div class="detail-empty">직무를 선택하시면 상세 정보가 표시됩니다.</div>
+            </main>
+          </div>
         </section>
       </section>
     </main>

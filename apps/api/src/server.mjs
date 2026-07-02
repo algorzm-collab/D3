@@ -3,7 +3,12 @@ import { createDailyCheckin, readTeamCheckins } from "./routes/work-okr.mjs";
 import { requestContextFromHttp } from "./request-context.mjs";
 
 function sendJson(response, status, body) {
-  response.writeHead(status, { "content-type": "application/json" });
+  response.writeHead(status, {
+    "content-type": "application/json",
+    "access-control-allow-origin": "*",
+    "access-control-allow-headers": "x-tenant-id, x-user-id, x-roles, x-org-ids, content-type",
+    "access-control-allow-methods": "GET, POST, OPTIONS"
+  });
   response.end(JSON.stringify(body));
 }
 
@@ -16,6 +21,15 @@ async function readBody(request) {
 
 export function createServer() {
   return http.createServer(async (request, response) => {
+    if (request.method === "OPTIONS") {
+      response.writeHead(240, {
+        "access-control-allow-origin": "*",
+        "access-control-allow-headers": "x-tenant-id, x-user-id, x-roles, x-org-ids, content-type",
+        "access-control-allow-methods": "GET, POST, OPTIONS"
+      });
+      return response.end();
+    }
+
     const url = new URL(request.url, "http://localhost");
     const requestContext = requestContextFromHttp(request);
 

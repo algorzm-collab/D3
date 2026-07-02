@@ -6,7 +6,7 @@
   "main": "src/server.mjs",
   "scripts": {
     "start": "node src/server.mjs",
-    "test": "node test/api-guardrails.test.mjs && node test/policy-role-matrix.test.mjs && node test/job-description-contract.test.mjs && node test/seed-boundary-contract.test.mjs && node test/generic-dummy-demo-contract.test.mjs && node test/generic-benchmark-contract.test.mjs && node test/korad-seed-contract.test.mjs && node test/korad-general-seed-contract.test.mjs"
+    "test": "node test/api-guardrails.test.mjs && node test/policy-role-matrix.test.mjs && node test/job-description-contract.test.mjs && node test/seed-boundary-contract.test.mjs && node test/generic-dummy-demo-contract.test.mjs && node test/generic-benchmark-contract.test.mjs && node test/korad-seed-contract.test.mjs && node test/korad-general-seed-contract.test.mjs && node test/dashboard-api.test.mjs"
   },
   "dependencies": {
     "@d3hr/audit": "0.0.0",

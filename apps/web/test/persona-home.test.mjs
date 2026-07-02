@@ -8,6 +8,8 @@ for (const persona of ["employee", "manager", "hr", "institution_head", "consult
   assert.match(html, new RegExp(`data-persona="${persona}"`));
   assert.match(js, new RegExp(`${persona}: \\{`));
 }
+assert.match(html, /data-persona="benchmark"/);
+assert.match(js, /function renderBenchmark\(/);
 
 for (const required of [
   "daily_checkins",

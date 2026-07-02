@@ -1,0 +1,55 @@
+{
+  "datasetMetadata": {
+    "id": "generic_benchmark_snapshot_v1",
+    "contentClass": "generic_dummy",
+    "usageBoundary": "sales_demo_and_local_development_only",
+    "benchmarkRule": "fictional_aggregate_only",
+    "institutionInputRule": "must not contain real institution source content",
+    "productContentRule": "fictional aggregate benchmark may ship as demo fixture"
+  },
+  "benchmarkScope": {
+    "sector": "fictional_public_institutions",
+    "sampleSize": 12,
+    "aggregationLevel": "synthetic_aggregate",
+    "asOf": "2026-07-01"
+  },
+  "metrics": [
+    {
+      "code": "jobdb_structuring_rate",
+      "label": "직무기술서 구조화율",
+      "median": 61,
+      "topQuartile": 78,
+      "unit": "%",
+      "interpretation": "직무기술서가 필드화되어 업무, 역량, 성과, 경력 데이터로 연결된 비율"
+    },
+    {
+      "code": "daily_evidence_activation",
+      "label": "일일 업무증거 활성도",
+      "median": 48,
+      "topQuartile": 72,
+      "unit": "%",
+      "interpretation": "일일 체크인이 직무 원자 과업과 증거 항목에 연결된 비율"
+    },
+    {
+      "code": "career_graph_coverage",
+      "label": "경력경로 그래프 연결률",
+      "median": 44,
+      "topQuartile": 69,
+      "unit": "%",
+      "interpretation": "선행/후행 직무 연결이 구조화된 직무 비율"
+    },
+    {
+      "code": "policy_guardrail_coverage",
+      "label": "권한정책 테스트 커버리지",
+      "median": 58,
+      "topQuartile": 83,
+      "unit": "%",
+      "interpretation": "역할, 조직범위, 민감도, 워크플로우별 정책 테스트가 존재하는 비율"
+    }
+  ],
+  "demoNarrative": [
+    "우리 기관의 직무기술서 구조화율은 공공기관 가상 벤치마크 중상위권입니다.",
+    "일일 업무증거 활성도는 낮아, 체크인과 과업 연결을 강화하면 성과평가 근거 품질이 개선됩니다.",
+    "경력경로 그래프 연결률은 배치와 커리어 추천의 설명가능성을 높이는 핵심 지표입니다."
+  ]
+}

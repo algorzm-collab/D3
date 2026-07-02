@@ -26,6 +26,8 @@ Estimated progress: 62%.
 
 Antigravity should continue from documented state, not from memory.
 
+GPT sets direction and reviews decisions; Antigravity implements bounded slices. See `docs/09_operations/GPT_TO_ANTIGRAVITY_WORKING_MODEL.md`.
+
 Before work:
 
 1. Read `docs/00_constitution/D3HR_PRODUCT_CONSTITUTION.md`.
@@ -62,3 +64,12 @@ npm.cmd test
 ```
 
 If tests pass, continue with a narrow UI/spec slice for the generic benchmark demo.
+
+## July 7 Review Anchor
+
+On July 7, review from this document and the working model:
+
+- confirm latest tests pass
+- confirm no real institution/reference sample content was used as demo content
+- inspect commits after `c12e10d`
+- decide whether to continue M5 dashboard or move to M6 admin/config
